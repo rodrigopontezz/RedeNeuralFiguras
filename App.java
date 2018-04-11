@@ -1,79 +1,133 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class App {
-
+	
+	static final int LINHAS_MATRIZ = 5;
+	static final int COLUNAS_MATRIZ = 5;
+	
 	public static void main(String[] args) {
 		List<Figura> listaFiguras;
 		List<Forma> listaFormas = new ArrayList<Forma>();;
 		List<Cor> listaCores = new ArrayList<Cor>();;
-		List<Neuronio> listaNeuronios;
-		Estimulo estimulos;
+		//List<Neuronio> listaNeuronios;
+		//Estimulo estimulos;
 		
-		listaFiguras = criarFiguras(listaFormas,listaCores);
-		
-		//int [] palpite;
+		try {
+			listaFiguras = criarFiguras(listaFormas,listaCores);
+			
+			System.out.println("Lista de Formas:");
+			for(Forma forma : listaFormas) {
+				System.out.println(forma.getNome());
+			}
+			
+			System.out.println("Total de Formas: " + Forma.getTotalFormas());
+			System.out.println("");
+			
+			System.out.println("Lista de Cores:");
+			for(Cor cor : listaCores) {
+				System.out.println(cor.getNome());
+			}
+			
+			System.out.println("Total de Cores: " + Cor.getTotalCores());
+			System.out.println("");
+			
+			System.out.println("Lista de Figuras:");
+			for(Figura figura : listaFiguras) {
+				System.out.println(figura.getForma().getNome());
+				System.out.println(figura.getCor().getNome());
+				System.out.println("");
+			}
+			
+			System.out.println("Total de Figuras: " + Figura.getTotalFiguras());
+			
+			//int [] palpite;
+			
+		} catch (IOException ex) {
+			System.out.println("Não foi possível abrir o arquivo figuras.txt.");
+			ex.printStackTrace();
+		}
 	}
 	
 	
-	public static List<Figura> criarFiguras(List<Forma> listaFormas, List<Cor> listaCores) {
+	public static List<Figura> criarFiguras(List<Forma> listaFormas, List<Cor> listaCores) throws IOException {
 		List<Figura> listaFiguras = new ArrayList<Figura>();
-		
-		//while(!EOF) {
+		File file = new File(".\\src\\figuras.txt");		
+		BufferedReader br = new BufferedReader(new FileReader(file));
+					
+		String line = null;
+		while((line = br.readLine()) != null) {
 			Figura figura = new Figura();
 			
 			/*LEITURA DA FIGURA NO ARQUIVO*/
 			
-			String nomeForma = "";
-			String nomeCor = "";
-			char [][] matriz;
-			//nomeForma = readNomeForma;
-			//nomeCor = readNomeCor;
-			//matriz = readMatrizFromFile
-		
+			String nomeForma = line;
+			String nomeCor = br.readLine();
 			
 			/* VERIFICANDO SE A FORMA É REPETIDA */
 			
-			//foreach(listaFormas) {
-				int i = 0;
-				if(listaFormas.get(i).getNome() == nomeForma) {
-					figura.setForma(listaFormas.get(i));
-					//break;
+			for(Forma forma : listaFormas) {
+				if(forma.getNome().equals(nomeForma)) {
+					figura.setForma(forma);
+					break;
 				}
-			//}
+			}
 			
 			/* CASO SEJA UMA NOVA FORMA, CRIA NOVO OBJETO */
 			
 			if(figura.getForma() == null) {
+				
+				/* POPULANDO A MATRIZ DE CARACTERES */
+				
+				char [][] matriz = new char[LINHAS_MATRIZ][COLUNAS_MATRIZ];
+				for(int i = 0; i < LINHAS_MATRIZ; i++) {
+					line = br.readLine();
+					for(int j = 0; j < line.length(); j++) {
+						matriz[i][j] = line.charAt(j);
+					}					
+				}
+														
 				Forma forma = new Forma();
 				forma.setNome(nomeForma);
-				//forma.setMatriz(matriz);
+				forma.setMatriz(matriz);
 				listaFormas.add(forma);
 				figura.setForma(forma);
+			} else {
+			
+				/* CASO SEJA UMA FORMA EXISTENTE, APENAS PERCORRE A MATRIZ */
+				
+				for(int i = 0; i < LINHAS_MATRIZ; i++) {
+					br.readLine();
+				}
 			}
 			
 			/* VERIFICA SE A COR É REPETIDA */
-						
-			//foreach(listaCores) {
-				//i
-				if(listaCores.get(i).getNome() == nomeCor) {
-					figura.setCor(listaCores.get(i));
-					//break;
+			
+			for(Cor cor : listaCores) {
+				if(cor.getNome().equals(nomeCor)) {
+					figura.setCor(cor);
+					break;
 				}
-			//}
-					
+			}
+			
 			/* CASO SEJA UMA NOVA COR, CRIA NOVO OBJETO */
-					
+			
 			if(figura.getCor() == null) {
 				Cor cor = new Cor();
 				cor.setNome(nomeCor);
 				listaCores.add(cor);
 				figura.setCor(cor);
 			}
-				
+			
 			listaFiguras.add(figura);
-		//}
-
+			br.readLine();
+		}
+		
+		br.close();	
 		return listaFiguras;
 	}
 	
@@ -105,69 +159,4 @@ public class App {
 }
 
 
-	
 	//MSE:  Em = (1/2 *(yi * ti)²)/Somatorio(n)
-	
-	/*final int quantidadeNeuronios = 10;   //quantidade de formas + quantidade de cores
-	final int quantidadeEstimulos = 3;
-	final int tamanhoDataset = 4;
-	
-	
-	
-	Forma f1 = new Forma("000000000");
-	
-	Float[][] estimulos = {{1f, 0f, 0f}, //3 estimulos, o primeiro sendo o bias
-		        {1f, 0f, 1f},
-		        {1f, 1f, 0f},
-		        {1f, 1f, 1f}};
-
-    Float[][] pesos = new Float[quantidadeEstimulos][quantidadeNeuronios];
-
-    for (int i = 0; i < quantidadeEstimulos; i++) {
-        for (int j = 0; j < quantidadeNeuronios; j++) {
-            pesos[i][j] = 1f;
-        }
-    }
-
-    String matriz = "";
-    Float taxaAprendizado = 0.5f, y;
-    Float[] somatorio = new Float[10];
-    for (int i = 0; i < quantidadeNeuronios; i++) {
-        somatorio[i] = 0f;
-    }
-    boolean erro = true;
-
-    //Loop para identificar erro
-    while (erro) {
-        erro = false;
-
-        for (int i = 0; i < tamanhoDataset; i++) {
-            for (int j = 0; j < quantidadeEstimulos; j++) {
-                
-            	//Loop para identificar o resultado de cada neurônio após receber um estímulo
-            	for (int k = 0; k < quantidadeNeuronios; k++) {
-                    somatorio[k] += estimulos[i][j] * pesos[j][k];
-                }
-                
-            	//Função degrau para arredondar os resultados obtidos para 0 ou 1
-                for (int k = 0; k < quantidadeNeuronios; k++) {
-                    if (somatorio[k] > 0) {
-                        somatorio[k] = 1f;
-                    } else {
-                        somatorio[k] = 0f;
-                    }
-                }
-                
-                Integer auxiliar;
-
-                for (int k = 0; k < quantidadeNeuronios; k++) {
-                    auxiliar = somatorio[k].intValue();
-                    matriz +=  auxiliar.toString();
-                }
-                System.out.println(matriz);
-            }
-
-            //if (matriz.equals)   CONTINUAR
-        }
-
-    }*/
