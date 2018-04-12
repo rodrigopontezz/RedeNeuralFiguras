@@ -14,19 +14,24 @@ public class Estimulo {
 	public void gerarEstimulos(int tamanhoDataset) {
 		estimulos = new double[tamanhoDataset][quantidadeEstimulos];
 		
-		//TO-DO
-		//this.estimulos[][] = ;
+		for(int i = 0; i < tamanhoDataset; i++) {
+			String str = transformaDecimalEmBinario(i,quantidadeEstimulos-1);
+			
+			for(int j = 0; j < quantidadeEstimulos; j++) {
+				if(j == 0) {
+					this.estimulos[i][j] = 1.0;
+				} else {
+					if (str.charAt(j-1) == '1') {
+						this.estimulos[i][j] = 1.0;
+					} else {
+						this.estimulos[i][j] = 0.0;
+					}
+				}
+			}
+		}
 	}
 	
-	public double getEstimulo(int x, int y) {
-		return this.estimulos[x][y];
-	}
-
-	public int getQuantidadeEstimulos() {
-		return quantidadeEstimulos;
-	}
-	
-	/*public String transformaDecimalEmBinario(int numero, int tamanhoTarget) {
+	public String transformaDecimalEmBinario(int numero, int tamanhoTarget) {
 		int d = numero;
 		StringBuffer str = new StringBuffer();
 		while (d > 0) {
@@ -45,17 +50,13 @@ public class Estimulo {
 		
 		aux.append(str.toString());
 		return aux.toString();
-	}*/
-	
-	/*public static int calculaDigitosBinarios(int num) {
-	num++;
-	int count = 0;
-	
-	while(num > 1) {
-		num = (int) Math.ceil(num / 2.0);
-		count++;
 	}
-	
-	return count;
-}*/
+
+	public int getQuantidadeEstimulos() {
+		return quantidadeEstimulos;
+	}
+		
+	public double getEstimulo(int x, int y) {
+		return this.estimulos[x][y];
+	}
 }

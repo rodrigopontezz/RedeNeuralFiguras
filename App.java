@@ -11,24 +11,37 @@ public class App {
 	static final int COLUNAS_MATRIZ = 5;
 	
 	public static void main(String[] args) {
-		List<Figura> listaFiguras;
-		List<Forma> listaFormas = new ArrayList<Forma>();;
-		List<Cor> listaCores = new ArrayList<Cor>();;
-		//List<Neuronio> listaNeuronios;
-		//Estimulo estimulos;
-		
 		try {
+			/* CRIAÇÃO DE FORMAS, CORES E FIGURAS*/
+			
+			List<Figura> listaFiguras;
+			List<Forma> listaFormas = new ArrayList<Forma>();;
+			List<Cor> listaCores = new ArrayList<Cor>();
 			listaFiguras = criarFiguras(listaFormas,listaCores);
+			
+			/* GERANDO TARGETS PARCIAIS DE CADA FORMA E CADA COR ISOLADAMENTE */
+			
 			gerarTargetsParciais(listaFormas, listaCores);
 			
-			/* GERANDO TARGETS ABSOLUTOS */
+			/* GERANDO TARGETS ABSOLUTOS DAS FIGURAS */
 			
 			for(Figura figura : listaFiguras) {
 				figura.calcularTarget();
 			}
 			
-			//Criação dos neurônios
-			//Criação da matriz
+			/* GERANDO A MATRIZ DE ESTÍMULOS */
+			
+			Estimulo estimulos = new Estimulo(Figura.getTotalFiguras());
+			
+			/* CRIAÇÃO DOS NEURÔNIOS */
+			
+			List<Neuronio> listaNeuronios = criarNeuronios(estimulos,listaFiguras);
+			
+			
+	
+			// Escrever métodos da classe neurônios
+			
+			
 			
 			/*boolean erro = true;
 			
@@ -48,7 +61,7 @@ public class App {
 			}*/
 			
 			
-			/* PRINTANDO AS LISTAS DE FORMAS, CORES E FIGURAS PARA CONFERÊNCIA */
+			/* PRINTANDO AS VARIÁVEIS PARA CONFERÊNCIA */
 			
 			System.out.println("LISTA DE FORMAS");
 			System.out.println("");
@@ -83,6 +96,22 @@ public class App {
 			}
 			
 			System.out.println("Total de Figuras: " + Figura.getTotalFiguras());
+			
+			System.out.println("");
+			System.out.println("");
+			System.out.println("Total de estímulos (incluindo bias): " + estimulos.getQuantidadeEstimulos());
+			System.out.println("");
+			System.out.println("MATRIZ DE ESTÍMULOS");
+			System.out.println("");
+			for (int i = 0; i < Figura.getTotalFiguras(); i++) {
+				
+				for (int j = 0; j < estimulos.getQuantidadeEstimulos(); j++) {
+					System.out.print((int) estimulos.getEstimulo(i,j) + " ");
+				}
+				System.out.println("");
+			}
+			
+			
 			
 		} catch (IOException ex) {
 			System.out.println("Não foi possível abrir o arquivo figuras.txt.");
@@ -203,10 +232,12 @@ public class App {
 		}
 	}
 	
-	public static List<Neuronio> criarNeuronios() {
+	public static List<Neuronio> criarNeuronios(Estimulo estimulos, List<Figura> listaFiguras) {
 		List<Neuronio> listaNeuronios = new ArrayList<Neuronio>();
 		
-		//TO-DO
+		for (int i = 0; i < (Forma.getTotalFormas() + Cor.getTotalCores()); i++) {
+			listaNeuronios.add(new Neuronio(estimulos.getQuantidadeEstimulos(), Figura.getTotalFiguras(), listaFiguras));
+		}
 		
 		return listaNeuronios;
 	}

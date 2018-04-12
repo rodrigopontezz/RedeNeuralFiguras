@@ -6,8 +6,8 @@ public class Neuronio {
 	private double somatorio;
 	private double taxaAprendizado;
 	
-	public Neuronio(int quantidadeEstimulos, int tamanhoDataset, double taxaAprendizado, List<Figura> listaFiguras) {
-		this.taxaAprendizado = taxaAprendizado;
+	public Neuronio(int quantidadeEstimulos, int tamanhoDataset, List<Figura> listaFiguras) {
+		this.taxaAprendizado = 0.5;
 		this.peso = new double[quantidadeEstimulos];
 		this.target = new double[tamanhoDataset];
 		
