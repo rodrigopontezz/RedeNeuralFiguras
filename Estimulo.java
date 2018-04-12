@@ -25,4 +25,37 @@ public class Estimulo {
 	public int getQuantidadeEstimulos() {
 		return quantidadeEstimulos;
 	}
+	
+	/*public String transformaDecimalEmBinario(int numero, int tamanhoTarget) {
+		int d = numero;
+		StringBuffer str = new StringBuffer();
+		while (d > 0) {
+			int b = d % 2;
+			str.append(b);
+			d = d >> 1;
+		}
+		str = str.reverse();
+		int completa = tamanhoTarget - str.length();
+		StringBuffer aux = new StringBuffer();
+		if(completa > 0) {
+			for(int i = 0; i < completa; i++) {
+				aux.append("0");
+			}
+		}
+		
+		aux.append(str.toString());
+		return aux.toString();
+	}*/
+	
+	/*public static int calculaDigitosBinarios(int num) {
+	num++;
+	int count = 0;
+	
+	while(num > 1) {
+		num = (int) Math.ceil(num / 2.0);
+		count++;
+	}
+	
+	return count;
+}*/
 }

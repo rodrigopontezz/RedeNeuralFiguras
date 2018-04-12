@@ -19,33 +19,65 @@ public class App {
 		
 		try {
 			listaFiguras = criarFiguras(listaFormas,listaCores);
+			gerarTargetsParciais(listaFormas, listaCores);
 			
-			System.out.println("Lista de Formas:");
+			//Geração dos targets absolutos
+			//Criação dos neurônios
+			//Criação da matriz
+			
+			/*boolean erro = true;
+			
+			while (erro) {
+				erro = false;
+				
+				//for (padroes i)
+					//for (neuronios j)
+						//for (estimulos k)
+							//somatorio[i] += estimulo(i,k) * peso(i,k)
+						
+						//y[j] = somatorio[j] 
+				
+						//if (y[j] != t[j])
+							erro = true;
+							//peso[i,j] = (formula);
+			}*/
+			
+			
+			/* PRINTANDO AS LISTAS DE FORMAS, CORES E FIGURAS PARA CONFERÊNCIA */
+			
+			System.out.println("LISTA DE FORMAS");
+			System.out.println("");
 			for(Forma forma : listaFormas) {
-				System.out.println(forma.getNome());
+				System.out.println("Forma: " + forma.getNome());
+				System.out.println("Target da forma: " + forma.getTargetForma());
+				System.out.println("");
 			}
-			
+
 			System.out.println("Total de Formas: " + Forma.getTotalFormas());
 			System.out.println("");
+			System.out.println("");
 			
-			System.out.println("Lista de Cores:");
+			System.out.println("LISTA DE CORES");
+			System.out.println("");
 			for(Cor cor : listaCores) {
-				System.out.println(cor.getNome());
+				System.out.println("Cor: " + cor.getNome());
+				System.out.println("Target da cor: " + cor.getTargetCor());
+				System.out.println("");
 			}
 			
 			System.out.println("Total de Cores: " + Cor.getTotalCores());
 			System.out.println("");
+			System.out.println("");
 			
-			System.out.println("Lista de Figuras:");
+			System.out.println("LISTA DE FIGURAS");
+			System.out.println("");
 			for(Figura figura : listaFiguras) {
-				System.out.println(figura.getForma().getNome());
-				System.out.println(figura.getCor().getNome());
+				System.out.println("Figura: " + figura.getForma().getNome() + " " + figura.getCor().getNome());
+				//System.out.println("Target da figura: " + figura.getForma());
 				System.out.println("");
 			}
 			
 			System.out.println("Total de Figuras: " + Figura.getTotalFiguras());
-			
-			//int [] palpite;
 			
 		} catch (IOException ex) {
 			System.out.println("Não foi possível abrir o arquivo figuras.txt.");
@@ -132,7 +164,38 @@ public class App {
 	}
 	
 	public static void gerarTargetsParciais(List<Forma> listaFormas, List<Cor> listaCores) {
-		//TO-DO
+		int count = Forma.getTotalFormas()-1;
+			
+		for (int i = 0; i < Forma.getTotalFormas(); i++) {
+			StringBuilder str = new StringBuilder();
+			
+			for (int j = 0; j < Forma.getTotalFormas(); j++) {
+				if (j == count) {
+					str.append("1");
+				} else {
+					str.append("0");
+				}
+			}
+			
+			listaFormas.get(i).setTargetForma(str.toString());
+			count--;
+		}
+		
+		count = Cor.getTotalCores()-1;
+		for (int i = 0; i < Cor.getTotalCores(); i++) {
+			StringBuilder str = new StringBuilder();
+			
+			for (int j = 0; j < Cor.getTotalCores(); j++) {
+				if (j == count) {
+					str.append("1");
+				} else {
+					str.append("0");
+				}
+			}
+			
+			listaCores.get(i).setTargetCor(str.toString());
+			count--;
+		}
 	}
 	
 	public static List<Neuronio> criarNeuronios() {
