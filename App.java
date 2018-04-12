@@ -21,7 +21,12 @@ public class App {
 			listaFiguras = criarFiguras(listaFormas,listaCores);
 			gerarTargetsParciais(listaFormas, listaCores);
 			
-			//Geração dos targets absolutos
+			/* GERANDO TARGETS ABSOLUTOS */
+			
+			for(Figura figura : listaFiguras) {
+				figura.calcularTarget();
+			}
+			
 			//Criação dos neurônios
 			//Criação da matriz
 			
@@ -73,7 +78,7 @@ public class App {
 			System.out.println("");
 			for(Figura figura : listaFiguras) {
 				System.out.println("Figura: " + figura.getForma().getNome() + " " + figura.getCor().getNome());
-				//System.out.println("Target da figura: " + figura.getForma());
+				System.out.println("Target da figura: " + figura.getTarget());
 				System.out.println("");
 			}
 			
