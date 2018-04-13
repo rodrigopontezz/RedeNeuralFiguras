@@ -38,10 +38,6 @@ public class App {
 			List<Neuronio> listaNeuronios = criarNeuronios(estimulos,listaFiguras);
 			
 			
-	
-			// Escrever métodos da classe neurônios
-			
-			
 			
 			/*boolean erro = true;
 			
@@ -108,6 +104,28 @@ public class App {
 				for (int j = 0; j < estimulos.getQuantidadeEstimulos(); j++) {
 					System.out.print((int) estimulos.getEstimulo(i,j) + " ");
 				}
+				System.out.println("");
+			}
+			
+			System.out.println("");
+			System.out.println("Total de Neurônios: " + listaNeuronios.size());
+			System.out.println("");
+			System.out.println("LISTA DE NEURÔNIOS");
+			System.out.println("");
+			int i = 1;
+			for(Neuronio neuronio : listaNeuronios) {
+				System.out.println("Neurônio " + i++);
+				System.out.println("");
+				System.out.print("Vetor de pesos: ");
+				for(int j = 0; j < estimulos.getQuantidadeEstimulos(); j++) {
+					System.out.print((int) neuronio.getPesoAt(j) + " ");
+				}
+				System.out.println("");
+				System.out.print("Vetor de Targets: ");
+				for(int j = 0; j < Figura.getTotalFiguras(); j++) {
+					System.out.print((int) neuronio.getTargetAt(j) + " ");
+				}
+				System.out.println("");
 				System.out.println("");
 			}
 			
@@ -236,7 +254,8 @@ public class App {
 		List<Neuronio> listaNeuronios = new ArrayList<Neuronio>();
 		
 		for (int i = 0; i < (Forma.getTotalFormas() + Cor.getTotalCores()); i++) {
-			listaNeuronios.add(new Neuronio(estimulos.getQuantidadeEstimulos(), Figura.getTotalFiguras(), listaFiguras));
+			/* CRIA NOVO NEURÔNIO E ADICIONA NA LISTA */
+			listaNeuronios.add(new Neuronio(estimulos.getQuantidadeEstimulos(), Figura.getTotalFiguras(), listaFiguras, i));
 		}
 		
 		return listaNeuronios;
