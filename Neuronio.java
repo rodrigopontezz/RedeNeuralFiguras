@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Neuronio {
 	private int quantidadeEstimulos;
-	private int palpite;
+	private int [] palpite;
 	private int [] target;
 	private double [] peso;
 	private double taxaAprendizado;
@@ -12,6 +12,7 @@ public class Neuronio {
 		this.quantidadeEstimulos = quantidadeEstimulos;
 		this.peso = new double[quantidadeEstimulos];
 		this.target = new int[tamanhoDataset];
+		this.palpite = new int[tamanhoDataset];
 		
 		inicializaPesos(quantidadeEstimulos);
 		gerarVetorTarget(listaFiguras,indice);
@@ -37,7 +38,7 @@ public class Neuronio {
 		}
 	}
 	
-	public void calculaSomatorio(int linha, double [] estimulos) {
+	public boolean aplicarEstimulos(double [] estimulos, int indiceFigura) {
 		double somatorio = 0.0;
 		
 		/* CÁLCULO DO SOMATÓRIO */
@@ -47,19 +48,22 @@ public class Neuronio {
 		
 		/* DEGRAU */
 		if (somatorio > 0) {
-			this.palpite = 1;
+			this.palpite[indiceFigura] = 1;
 		} else {
-			this.palpite = 0;
+			this.palpite[indiceFigura] = 0;
 		}
+		
+		if (this.palpite[indiceFigura] != this.target[indiceFigura]) {
+			ajustarPesos(estimulos, indiceFigura);
+			return true;
+		}
+		
+		return false;
 	}
 	
-	public int getPalpite() {
-		return this.palpite;
-	}
-	
-	public void ajustarPesos(int [] estimulos, int indiceFigura/*int [] target, int somatorio, double taxaAprendizado*/) {
+	public void ajustarPesos(double [] estimulos, int indiceFigura/*int [] target, int somatorio, double taxaAprendizado*/) {
 		for (int i = 0; i < quantidadeEstimulos; i++) {
-			peso[i] = peso[i] + (target[indiceFigura] - palpite) * estimulos[i] * this.taxaAprendizado;
+			peso[i] = peso[i] + (target[indiceFigura] - palpite[indiceFigura]) * estimulos[i] * this.taxaAprendizado;
 		}
 	}
 	
@@ -69,5 +73,9 @@ public class Neuronio {
 	
 	public double getTargetAt(int x) {
 		return this.target[x];
+	}
+	
+	public int getPalpiteAt(int x) {
+		return palpite[x];
 	}
 }

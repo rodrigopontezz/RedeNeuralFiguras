@@ -37,29 +37,58 @@ public class App {
 			
 			List<Neuronio> listaNeuronios = criarNeuronios(estimulos,listaFiguras);
 			
+			/* LOOP PARA TREINAMENTO DA REDE NEURAL */
 			
-			
-			/*boolean erro = true;
+			int epoca = 0;
+			boolean erro = true;
 			
 			while (erro) {
 				erro = false;
 				
-				//for (padroes i)
-					//for (neuronios j)
-						//for (estimulos k)
-							//somatorio[i] += estimulo(i,k) * peso(i,k)
-						
-						//y[j] = somatorio[j] 
-				
-						//if (y[j] != t[j])
+				for (int i = 0; i < Figura.getTotalFiguras(); i++) {		//Percorre o dataset
+					for (int j = 0; j < listaNeuronios.size(); j++) {			//Percorre os neurônios
+						if (listaNeuronios.get(j).aplicarEstimulos(estimulos.getVetorEstimulo(i), i) == true || erro == true) {
 							erro = true;
-							//peso[i,j] = (formula);
-			}*/
+						}
+					}
+				}
+				epoca++;
+				
+				System.out.println("Época " + epoca);
+				System.out.println();
+				int k = 1;
+				for(Neuronio neuronio : listaNeuronios) {
+					System.out.println("Neurônio " + k++);
+					System.out.println("");
+					System.out.print("Palpite: ");
+					for(int n = 0; n < Figura.getTotalFiguras(); n++) {
+						System.out.print(neuronio.getPalpiteAt(n) + " ");
+					}
+									
+					System.out.println("");
+					System.out.print("Target: ");
+					for(int n = 0; n < Figura.getTotalFiguras(); n++) {
+						System.out.print((int)neuronio.getTargetAt(n) + " ");
+					}
+					
+					System.out.println("");
+					System.out.println("");
+				}
+				System.out.println("___________________________________________");
+				System.out.println("");
+				
+				
+				if (epoca > 200) {
+					System.out.println("Quantidade de épocas muito alta!");
+					System.out.println("Algum neurônio está repetindo um vetor de palpites errado.");
+					break;
+				}
+			}
 			
-			
+
 			/* PRINTANDO AS VARIÁVEIS PARA CONFERÊNCIA */
 			
-			System.out.println("LISTA DE FORMAS");
+			/*System.out.println("LISTA DE FORMAS");
 			System.out.println("");
 			for(Forma forma : listaFormas) {
 				System.out.println("Forma: " + forma.getNome());
@@ -101,8 +130,10 @@ public class App {
 			System.out.println("");
 			for (int i = 0; i < Figura.getTotalFiguras(); i++) {
 				
+				double [] vetorEstimulos = estimulos.getVetorEstimulo(i);
+				
 				for (int j = 0; j < estimulos.getQuantidadeEstimulos(); j++) {
-					System.out.print((int) estimulos.getEstimulo(i,j) + " ");
+					System.out.print((int) vetorEstimulos[j] + " ");
 				}
 				System.out.println("");
 			}
@@ -127,7 +158,7 @@ public class App {
 				}
 				System.out.println("");
 				System.out.println("");
-			}
+			}*/
 			
 			
 			
@@ -216,7 +247,7 @@ public class App {
 	}
 	
 	public static void gerarTargetsParciais(List<Forma> listaFormas, List<Cor> listaCores) {
-		int count = Forma.getTotalFormas()-1;
+		int count = 0;
 			
 		for (int i = 0; i < Forma.getTotalFormas(); i++) {
 			StringBuilder str = new StringBuilder();
@@ -230,10 +261,10 @@ public class App {
 			}
 			
 			listaFormas.get(i).setTargetForma(str.toString());
-			count--;
+			count++;
 		}
 		
-		count = Cor.getTotalCores()-1;
+		count = 0;
 		for (int i = 0; i < Cor.getTotalCores(); i++) {
 			StringBuilder str = new StringBuilder();
 			
@@ -246,7 +277,7 @@ public class App {
 			}
 			
 			listaCores.get(i).setTargetCor(str.toString());
-			count--;
+			count++;
 		}
 	}
 	

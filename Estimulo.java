@@ -56,7 +56,7 @@ public class Estimulo {
 		return quantidadeEstimulos;
 	}
 		
-	public double getEstimulo(int x, int y) {
-		return this.estimulos[x][y];
+	public double [] getVetorEstimulo(int linha) {
+		return this.estimulos[linha];
 	}
 }
