@@ -7,7 +7,7 @@ public class Neuronio {
 	private double [] peso;
 	private double taxaAprendizado;
 	
-	public Neuronio(int quantidadeEstimulos, int tamanhoDataset, List<Figura> listaFiguras, int indice) {
+	public Neuronio (int quantidadeEstimulos, int tamanhoDataset, List<Treinavel> listaTreinavel, int indice) {
 		this.taxaAprendizado = 0.3;
 		this.quantidadeEstimulos = quantidadeEstimulos;
 		this.peso = new double[quantidadeEstimulos];
@@ -15,7 +15,7 @@ public class Neuronio {
 		this.palpite = new int[tamanhoDataset];
 		
 		inicializaPesos(quantidadeEstimulos);
-		gerarVetorTarget(listaFiguras,indice);
+		gerarVetorTarget(listaTreinavel,indice);
 	}
 	
 	public void inicializaPesos(int quantidadeEstimulos) {
@@ -24,11 +24,11 @@ public class Neuronio {
 		}
 	}
 	
-	public void gerarVetorTarget(List<Figura> listaFiguras, int indice) {
+	public void gerarVetorTarget(List<Treinavel> listaTreinavel, int indice) {
 		int i = 0;
-		for (Figura figura : listaFiguras) {
+		for (Treinavel treinavel : listaTreinavel) {
 			
-			char ch = figura.getTarget().charAt(indice);
+			char ch = treinavel.getTarget().charAt(indice);
 			if (ch == '0') {
 				this.target[i] = 0;
 			} else {
@@ -61,7 +61,7 @@ public class Neuronio {
 		return false;
 	}
 	
-	public void ajustarPesos(double [] estimulos, int indiceFigura/*int [] target, int somatorio, double taxaAprendizado*/) {
+	public void ajustarPesos(double [] estimulos, int indiceFigura) {
 		for (int i = 0; i < quantidadeEstimulos; i++) {
 			peso[i] = peso[i] + (target[indiceFigura] - palpite[indiceFigura]) * estimulos[i] * this.taxaAprendizado;
 		}
@@ -71,7 +71,7 @@ public class Neuronio {
 	 	return this.peso[x];
 	}
 	
-	public double getTargetAt(int x) {
+	public int getTargetAt(int x) {
 		return this.target[x];
 	}
 	

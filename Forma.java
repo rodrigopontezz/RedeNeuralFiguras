@@ -1,4 +1,4 @@
-public class Forma {
+public class Forma implements Treinavel {
 	private static int totalFormas = 0;
 	private String nome;
 	private char [][] matriz;
@@ -32,11 +32,22 @@ public class Forma {
 		this.matriz = matriz;
 	}
 	
-	public String getTargetForma() {
+	@Override
+	public String getTarget() {
 		return targetForma;
 	}
 	
-	public void setTargetForma(String targetForma) {
-		this.targetForma = targetForma;
+	public void setTargetForma(int count) {
+		StringBuilder str = new StringBuilder();
+		
+		for (int i = 0; i < Forma.getTotalFormas(); i++) {
+			if (i == count) {
+				str.append("1");
+			} else {
+				str.append("0");
+			}
+		}
+		
+		this.targetForma = str.toString();
 	}
 }

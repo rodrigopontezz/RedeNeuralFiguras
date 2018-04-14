@@ -1,4 +1,4 @@
-public class Cor {
+public class Cor implements Treinavel {
 	private static int totalCores = 0;
 	private String nome;
 	private String targetCor;
@@ -23,11 +23,22 @@ public class Cor {
 		this.nome = nome;
 	}
 	
-	public String getTargetCor() {
+	@Override
+	public String getTarget() {
 		return targetCor;
 	}
 	
-	public void setTargetCor(String targetCor) {
-		this.targetCor = targetCor;
+	public void setTargetCor(int count) {
+		StringBuilder str = new StringBuilder();
+		
+		for (int i = 0; i < Cor.getTotalCores(); i++) {
+			if (i == count) {
+				str.append("1");
+			} else {
+				str.append("0");
+			}
+		}
+		
+		this.targetCor = str.toString();
 	}
 }

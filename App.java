@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,29 +14,37 @@ public class App {
 	public static void main(String[] args) {
 		try {
 			/* CRIAÇÃO DE FORMAS, CORES E FIGURAS*/
-			
-			List<Figura> listaFiguras;
+
 			List<Forma> listaFormas = new ArrayList<Forma>();;
 			List<Cor> listaCores = new ArrayList<Cor>();
-			listaFiguras = criarFiguras(listaFormas,listaCores);
+			List<Figura> listaFiguras = criarFiguras(listaFormas,listaCores);
+
+			//lerFormasDoArquivo(listaFormas);
+			//lerCoresDoArquivo(listaCores);
+			//gerarFormasECores(listaFormas,listaCores);
 			
-			/* GERANDO TARGETS PARCIAIS DE CADA FORMA E CADA COR ISOLADAMENTE */
+			/* GERANDO VETOR DE TARGETS PARA FORMAS E CORES, E CONCATENA TARGETS NA LISTA FIGURAS */
 			
-			gerarTargetsParciais(listaFormas, listaCores);
+			gerarTargets(listaFormas, listaCores, listaFiguras);
 			
-			/* GERANDO TARGETS ABSOLUTOS DAS FIGURAS */
+			/* GERANDO AS MATRIZES DE ESTÍMULOS */
 			
-			for(Figura figura : listaFiguras) {
-				figura.calcularTarget();
-			}
+			Estimulo estimuloFormas = new Estimulo(Forma.getTotalFormas());
+			Estimulo estimuloCores = new Estimulo(Cor.getTotalCores());
 			
-			/* GERANDO A MATRIZ DE ESTÍMULOS */
+			/* CRIAÇÃO DA LISTA DE FORMAS E CORES AUXILIAR */
 			
-			Estimulo estimulos = new Estimulo(Figura.getTotalFiguras());
+			List<Treinavel> lFormas = new ArrayList<>();
+			List<Treinavel> lCores = new ArrayList<>();
+			
+			criarListasAuxiliares(listaFormas,listaCores,lFormas,lCores);
 			
 			/* CRIAÇÃO DOS NEURÔNIOS */
 			
-			List<Neuronio> listaNeuronios = criarNeuronios(estimulos,listaFiguras);
+			List<Neuronio> listaNeuroniosForma = new ArrayList<>();
+			List<Neuronio> listaNeuroniosCor = new ArrayList<>();
+			
+			criarNeuronios(estimuloFormas, estimuloCores, lFormas, lCores, listaNeuroniosForma, listaNeuroniosCor);
 			
 			/* LOOP PARA TREINAMENTO DA REDE NEURAL */
 			
@@ -45,30 +54,80 @@ public class App {
 			while (erro) {
 				erro = false;
 				
-				for (int i = 0; i < Figura.getTotalFiguras(); i++) {		//Percorre o dataset
-					for (int j = 0; j < listaNeuronios.size(); j++) {			//Percorre os neurônios
-						if (listaNeuronios.get(j).aplicarEstimulos(estimulos.getVetorEstimulo(i), i) == true || erro == true) {
+				/* TREINANDO RECONHECIMENTO DE FORMAS */
+				for (int i = 0; i < Forma.getTotalFormas(); i++) {					//Percorre o dataset
+					for (int j = 0; j < listaNeuroniosForma.size(); j++) {			//Percorre os neurônios
+						if (listaNeuroniosForma.get(j).aplicarEstimulos(estimuloFormas.getVetorEstimulo(i), i) == true || erro == true) {
 							erro = true;
 						}
 					}
 				}
-				epoca++;
 				
-				System.out.println("Época " + epoca);
+				/* TREINANDO RECONHECIMENTO DE CORES */
+				
+				for (int i = 0; i < Cor.getTotalCores(); i++) {						//Percorre o dataset
+					for (int j = 0; j < listaNeuroniosCor.size(); j++) {			//Percorre os neurônios
+						if (listaNeuroniosCor.get(j).aplicarEstimulos(estimuloCores.getVetorEstimulo(i), i) == true || erro == true) {
+							erro = true;
+						}
+					}
+				}
+
+				System.out.println("Época " + ++epoca);
 				System.out.println();
-				int k = 1;
-				for(Neuronio neuronio : listaNeuronios) {
+				
+				System.out.println("");
+				System.out.println("Total de Neurônios p/ Forma: " + listaNeuroniosForma.size());
+				System.out.println("");
+				System.out.println("LISTA DE NEURÔNIOS");
+				System.out.println("");
+				int i = 1;
+				for(Neuronio neuronio : listaNeuroniosForma) {
+					System.out.println("Neurônio " + i++);
+					System.out.println("");
+					System.out.print("Vetor de pesos: ");
+					for(int j = 0; j < estimuloFormas.getQuantidadeEstimulos(); j++) {
+						System.out.printf("%.2f ", neuronio.getPesoAt(j));
+					}
+					System.out.println("");
+					System.out.println("");
+				}
+				
+				System.out.println("-------------------------------------");
+				System.out.println("");
+				System.out.println("Total de Neurônios p/ Cor: " + listaNeuroniosCor.size());
+				System.out.println("");
+				System.out.println("LISTA DE NEURÔNIOS");
+				System.out.println("");
+				i = 1;
+				for(Neuronio neuronio : listaNeuroniosCor) {
+					System.out.println("Neurônio " + i++);
+					System.out.println("");
+					System.out.print("Vetor de pesos: ");
+					for(int j = 0; j < estimuloCores.getQuantidadeEstimulos(); j++) {
+						System.out.printf("%.2f ", neuronio.getPesoAt(j));
+					}
+					System.out.println("");
+					System.out.println("");
+				}
+				System.out.println("______________________________________________________________");
+				System.out.println("______________________________________________________________");
+				System.out.println("______________________________________________________________");
+				System.out.println();
+				
+				/*int k = 1;
+				for(Neuronio neuronio : listaNeuroniosForma) {
 					System.out.println("Neurônio " + k++);
 					System.out.println("");
 					System.out.print("Palpite: ");
-					for(int n = 0; n < Figura.getTotalFiguras(); n++) {
+					for(int n = 0; n < Forma.getTotalFormas(); n++) {
 						System.out.print(neuronio.getPalpiteAt(n) + " ");
 					}
 									
 					System.out.println("");
-					System.out.print("Target: ");
-					for(int n = 0; n < Figura.getTotalFiguras(); n++) {
-						System.out.print((int)neuronio.getTargetAt(n) + " ");
+					System.out.print("Target:  ");
+					for(int n = 0; n < Forma.getTotalFormas(); n++) {
+						System.out.print(neuronio.getTargetAt(n) + " ");
 					}
 					
 					System.out.println("");
@@ -76,9 +135,31 @@ public class App {
 				}
 				System.out.println("___________________________________________");
 				System.out.println("");
+		
+				k = 1;
+				for(Neuronio neuronio : listaNeuroniosCor) {
+					System.out.println("Neurônio " + k++);
+					System.out.println("");
+					System.out.print("Palpite: ");
+					for(int n = 0; n < Cor.getTotalCores(); n++) {
+						System.out.print(neuronio.getPalpiteAt(n) + " ");
+					}
+									
+					System.out.println("");
+					System.out.print("Target:  ");
+					for(int n = 0; n < Cor.getTotalCores(); n++) {
+						System.out.print(neuronio.getTargetAt(n) + " ");
+					}
+					
+					System.out.println("");
+					System.out.println("");
+				}
+				System.out.println("___________________________________________");
+				System.out.println("");*/
+
 				
 				
-				if (epoca > 200) {
+				if (epoca > 1000) {
 					System.out.println("Quantidade de épocas muito alta!");
 					System.out.println("Algum neurônio está repetindo um vetor de palpites errado.");
 					break;
@@ -92,7 +173,7 @@ public class App {
 			System.out.println("");
 			for(Forma forma : listaFormas) {
 				System.out.println("Forma: " + forma.getNome());
-				System.out.println("Target da forma: " + forma.getTargetForma());
+				System.out.println("Target da forma: " + forma.getTarget());
 				System.out.println("");
 			}
 
@@ -104,7 +185,7 @@ public class App {
 			System.out.println("");
 			for(Cor cor : listaCores) {
 				System.out.println("Cor: " + cor.getNome());
-				System.out.println("Target da cor: " + cor.getTargetCor());
+				System.out.println("Target da cor: " + cor.getTarget());
 				System.out.println("");
 			}
 			
@@ -124,37 +205,65 @@ public class App {
 			
 			System.out.println("");
 			System.out.println("");
-			System.out.println("Total de estímulos (incluindo bias): " + estimulos.getQuantidadeEstimulos());
+			System.out.println("Total de estímulos p/ Forma (incluindo bias): " + estimuloFormas.getQuantidadeEstimulos());
 			System.out.println("");
 			System.out.println("MATRIZ DE ESTÍMULOS");
 			System.out.println("");
-			for (int i = 0; i < Figura.getTotalFiguras(); i++) {
+			for (int i = 0; i < Forma.getTotalFormas(); i++) {
 				
-				double [] vetorEstimulos = estimulos.getVetorEstimulo(i);
+				double [] vetorEstimulos = estimuloFormas.getVetorEstimulo(i);
 				
-				for (int j = 0; j < estimulos.getQuantidadeEstimulos(); j++) {
+				for (int j = 0; j < estimuloFormas.getQuantidadeEstimulos(); j++) {
 					System.out.print((int) vetorEstimulos[j] + " ");
 				}
 				System.out.println("");
 			}
 			
 			System.out.println("");
-			System.out.println("Total de Neurônios: " + listaNeuronios.size());
+			System.out.println("Total de estímulos p/ Cor (incluindo bias): " + estimuloCores.getQuantidadeEstimulos());
+			System.out.println("");
+			System.out.println("MATRIZ DE ESTÍMULOS");
+			System.out.println("");
+			for (int i = 0; i < Cor.getTotalCores(); i++) {
+				
+				double [] vetorEstimulos = estimuloCores.getVetorEstimulo(i);
+				
+				for (int j = 0; j < estimuloCores.getQuantidadeEstimulos(); j++) {
+					System.out.print((int) vetorEstimulos[j] + " ");
+				}
+				System.out.println("");
+			}
+			System.out.println("_____________________________");
+			System.out.println("");
+			System.out.println("Total de Neurônios p/ Forma: " + listaNeuroniosForma.size());
 			System.out.println("");
 			System.out.println("LISTA DE NEURÔNIOS");
 			System.out.println("");
 			int i = 1;
-			for(Neuronio neuronio : listaNeuronios) {
+			for(Neuronio neuronio : listaNeuroniosForma) {
 				System.out.println("Neurônio " + i++);
 				System.out.println("");
 				System.out.print("Vetor de pesos: ");
-				for(int j = 0; j < estimulos.getQuantidadeEstimulos(); j++) {
-					System.out.print((int) neuronio.getPesoAt(j) + " ");
+				for(int j = 0; j < estimuloFormas.getQuantidadeEstimulos(); j++) {
+					System.out.printf("%.2f ", neuronio.getPesoAt(j));
 				}
 				System.out.println("");
-				System.out.print("Vetor de Targets: ");
-				for(int j = 0; j < Figura.getTotalFiguras(); j++) {
-					System.out.print((int) neuronio.getTargetAt(j) + " ");
+				System.out.println("");
+			}
+			
+			System.out.println("_____________________________");
+			System.out.println("");
+			System.out.println("Total de Neurônios p/ Cor: " + listaNeuroniosCor.size());
+			System.out.println("");
+			System.out.println("LISTA DE NEURÔNIOS");
+			System.out.println("");
+			i = 1;
+			for(Neuronio neuronio : listaNeuroniosCor) {
+				System.out.println("Neurônio " + i++);
+				System.out.println("");
+				System.out.print("Vetor de pesos: ");
+				for(int j = 0; j < estimuloCores.getQuantidadeEstimulos(); j++) {
+					System.out.printf("%.2f ", neuronio.getPesoAt(j));
 				}
 				System.out.println("");
 				System.out.println("");
@@ -167,7 +276,7 @@ public class App {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	
 	public static List<Figura> criarFiguras(List<Forma> listaFormas, List<Cor> listaCores) throws IOException {
 		List<Figura> listaFiguras = new ArrayList<Figura>();
@@ -246,64 +355,40 @@ public class App {
 		return listaFiguras;
 	}
 	
-	public static void gerarTargetsParciais(List<Forma> listaFormas, List<Cor> listaCores) {
-		int count = 0;
+	public static void gerarTargets(List<Forma> listaFormas, List<Cor> listaCores, List<Figura> listaFiguras) {
 			
 		for (int i = 0; i < Forma.getTotalFormas(); i++) {
-			StringBuilder str = new StringBuilder();
-			
-			for (int j = 0; j < Forma.getTotalFormas(); j++) {
-				if (j == count) {
-					str.append("1");
-				} else {
-					str.append("0");
-				}
-			}
-			
-			listaFormas.get(i).setTargetForma(str.toString());
-			count++;
+			listaFormas.get(i).setTargetForma(i);
 		}
 		
-		count = 0;
 		for (int i = 0; i < Cor.getTotalCores(); i++) {
-			StringBuilder str = new StringBuilder();
-			
-			for (int j = 0; j < Cor.getTotalCores(); j++) {
-				if (j == count) {
-					str.append("1");
-				} else {
-					str.append("0");
-				}
-			}
-			
-			listaCores.get(i).setTargetCor(str.toString());
-			count++;
+			listaCores.get(i).setTargetCor(i);
+		}
+		
+		for(Figura figura : listaFiguras) {
+			figura.calcularTarget();
 		}
 	}
 	
-	public static List<Neuronio> criarNeuronios(Estimulo estimulos, List<Figura> listaFiguras) {
-		List<Neuronio> listaNeuronios = new ArrayList<Neuronio>();
-		
-		for (int i = 0; i < (Forma.getTotalFormas() + Cor.getTotalCores()); i++) {
-			/* CRIA NOVO NEURÔNIO E ADICIONA NA LISTA */
-			listaNeuronios.add(new Neuronio(estimulos.getQuantidadeEstimulos(), Figura.getTotalFiguras(), listaFiguras, i));
+	public static void criarListasAuxiliares(List<Forma> listaFormas, List<Cor> listaCores, List<Treinavel> lFormas, List<Treinavel> lCores) {
+		for (Forma forma : listaFormas) {
+			lFormas.add(forma);
 		}
 		
-		return listaNeuronios;
+		for (Cor cor : listaCores) {
+			lCores.add(cor);
+		}
 	}
 	
-	public static String palpitesToString(int [] palpites) {
-		StringBuilder palpite = new StringBuilder();
+	public static void criarNeuronios(Estimulo estimuloFormas, Estimulo estimuloCores, List<Treinavel> listaFormas, List<Treinavel> listaCores, List<Neuronio> listaNeuroniosForma, List<Neuronio> listaNeuroniosCor) {
 		
-		//TO-DO
+		for (int i = 0; i < (Forma.getTotalFormas()); i++) {
+			listaNeuroniosForma.add(new Neuronio(estimuloFormas.getQuantidadeEstimulos(), Forma.getTotalFormas(), listaFormas, i));
+		}
 		
-		return palpite.toString();
-	}
-	
-	public static boolean checarErro() {
-		//TO-DO
-		
-		return false;
+		for (int i = 0; i < (Cor.getTotalCores()); i++) {
+			listaNeuroniosCor.add(new Neuronio(estimuloCores.getQuantidadeEstimulos(), Cor.getTotalCores(), listaCores, i));
+		}
 	}
 }
 

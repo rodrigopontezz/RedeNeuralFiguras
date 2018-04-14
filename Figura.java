@@ -9,7 +9,7 @@ public class Figura {
 	}
 	
 	public void calcularTarget() {
-		this.target = this.forma.getTargetForma() + this.cor.getTargetCor();
+		this.target = this.forma.getTarget() + this.cor.getTarget();
 	}
 	
 	public String getTarget() {
