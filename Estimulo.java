@@ -1,3 +1,9 @@
+/*	 Implementa uma matriz de estímulos e seus métodos.
+ * 
+ * 	 @author Rodrigo Pontes
+ *	 @version 1.1
+ */
+
 public class Estimulo {
 	private int quantidadeEstimulos;
 	private double [][] estimulos;
@@ -7,10 +13,15 @@ public class Estimulo {
 		gerarEstimulos(tamanhoDataset);
 	}
 	
+	/* Método que calcula a quantidade de estímulos necessários para
+	 * representar o dataset recebido, incluindo o estímulo fixo (bias).
+	 */
 	public void calcularQuantidadeEstimulos(int tamanhoDataset) {
 		this.quantidadeEstimulos = (int) (Math.ceil(Math.sqrt(tamanhoDataset)) + 1);
 	}
 	
+	/* Método para geração da matriz de estímulos.
+	 */
 	public void gerarEstimulos(int tamanhoDataset) {
 		estimulos = new double[tamanhoDataset][quantidadeEstimulos];
 		
@@ -31,7 +42,11 @@ public class Estimulo {
 		}
 	}
 	
-	public String transformaDecimalEmBinario(int numero, int tamanhoTarget) {
+	/* Método que recebe um número em decimal, e o tamanho em caracteres
+	 * que a String de retorno deve conter. Retorna o número transformado
+	 * em binário.
+	 */
+	public String transformaDecimalEmBinario(int numero, int tamanho) {
 		int d = numero;
 		StringBuffer str = new StringBuffer();
 		while (d > 0) {
@@ -40,7 +55,7 @@ public class Estimulo {
 			d = d >> 1;
 		}
 		str = str.reverse();
-		int completa = tamanhoTarget - str.length();
+		int completa = tamanho - str.length();
 		StringBuffer aux = new StringBuffer();
 		if(completa > 0) {
 			for(int i = 0; i < completa; i++) {

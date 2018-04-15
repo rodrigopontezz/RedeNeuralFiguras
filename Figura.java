@@ -1,13 +1,28 @@
+/*	 Implementação de figuras, que representam a união de uma forma e uma cor.
+ * 
+ * 	 @author Rodrigo Pontes
+ *	 @version 1.1
+ */
+
 public class Figura {
 	private static int totalFiguras = 0;
+	private int id;
 	private Forma forma;
 	private Cor cor;
 	private String target;
 	
 	public Figura() {
+		this.id = Figura.getTotalFiguras();
 		Figura.totalFiguras++;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
+	/* Método que calcula o target absoluto da figura concatenando os
+	 * targets parciais da forma e da cor.
+	 */
 	public void calcularTarget() {
 		this.target = this.forma.getTarget() + this.cor.getTarget();
 	}

@@ -1,11 +1,23 @@
+/*	 Implementação de como a rede neural reconhece formas a partir do dataset.
+ * 
+ * 	 @author Rodrigo Pontes
+ *	 @version 1.1
+ */
+
 public class Forma implements Treinavel {
 	private static int totalFormas = 0;
+	private int id;
 	private String nome;
 	private char [][] matriz;
 	private String targetForma;
-	
+
 	public Forma() {
+		this.id = Forma.getTotalFormas();
 		Forma.totalFormas++;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	public static int getTotalFormas() {
@@ -37,6 +49,8 @@ public class Forma implements Treinavel {
 		return targetForma;
 	}
 	
+	/* Método que gera um target único para cada forma existente.
+	 */
 	public void setTargetForma(int count) {
 		StringBuilder str = new StringBuilder();
 		

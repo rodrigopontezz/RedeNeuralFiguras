@@ -1,3 +1,9 @@
+/*	 Implementação de neurônios que treinarão a rede neural.
+ * 
+ * 	 @author Rodrigo Pontes
+ *	 @version 1.1
+ */
+
 import java.util.List;
 
 public class Neuronio {
@@ -7,6 +13,10 @@ public class Neuronio {
 	private double [] peso;
 	private double taxaAprendizado;
 	
+	/*	Construtor que inicializa o neurônio de acordo com a interface
+	 *  Treinavel, que pode receber uma lista de formas ou cores para
+	 *  treinamento.
+	 */
 	public Neuronio (int quantidadeEstimulos, int tamanhoDataset, List<Treinavel> listaTreinavel, int indice) {
 		this.taxaAprendizado = 0.3;
 		this.quantidadeEstimulos = quantidadeEstimulos;
@@ -24,6 +34,10 @@ public class Neuronio {
 		}
 	}
 	
+	/* Método que gera o vetor de targets para o neurônio. Cada item "i" deste
+	 * vetor representa a resposta desejável para o conjunto de estímulos "i"
+	 * que receber posteriormente. 
+	 */
 	public void gerarVetorTarget(List<Treinavel> listaTreinavel, int indice) {
 		int i = 0;
 		for (Treinavel treinavel : listaTreinavel) {
@@ -38,6 +52,11 @@ public class Neuronio {
 		}
 	}
 	
+	/* Método que recebe um conjunto de estímulos "i", calcula o somatório de
+	 * acordo com o vetor de pesos atual do neurônio e arrisca um palpite. Caso
+	 * o palpite do neurônio não corresponda com a resposta desejável (vetor de 
+	 * targets "i"), reajusta os pesos.
+	 */
 	public boolean aplicarEstimulos(double [] estimulos, int indiceFigura) {
 		double somatorio = 0.0;
 		
@@ -61,21 +80,23 @@ public class Neuronio {
 		return false;
 	}
 	
+	/* Método que reajusta os pesos do neurônio de acordo com um conjunto
+	 * de estímulos "i" recebido.
+	 */
 	public void ajustarPesos(double [] estimulos, int indiceFigura) {
 		for (int i = 0; i < quantidadeEstimulos; i++) {
 			peso[i] = peso[i] + (target[indiceFigura] - palpite[indiceFigura]) * estimulos[i] * this.taxaAprendizado;
 		}
 	}
 	
-	public double getPesoAt(int x) {
-	 	return this.peso[x];
+	public char getPalpiteAt(int x) {
+		if (this.palpite[x] == 1) {
+			return '1';
+		}
+		return '0';
 	}
 	
-	public int getTargetAt(int x) {
-		return this.target[x];
-	}
-	
-	public int getPalpiteAt(int x) {
-		return palpite[x];
+	public double[] getPeso() {
+		return peso;
 	}
 }

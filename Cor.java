@@ -1,10 +1,22 @@
+/*	 Implementação de como a rede neural reconhece cores a partir do dataset.
+ * 
+ * 	 @author Rodrigo Pontes
+ *	 @version 1.1
+ */
+
 public class Cor implements Treinavel {
 	private static int totalCores = 0;
+	private int id;
 	private String nome;
 	private String targetCor;
 	
 	public Cor() {
+		this.id = Cor.getTotalCores();
 		Cor.totalCores++;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	public static int getTotalCores() {
@@ -28,6 +40,8 @@ public class Cor implements Treinavel {
 		return targetCor;
 	}
 	
+	/* Método que gera um target único para cada cor existente.
+	 */
 	public void setTargetCor(int count) {
 		StringBuilder str = new StringBuilder();
 		

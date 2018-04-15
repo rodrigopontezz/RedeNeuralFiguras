@@ -23,7 +23,7 @@ Marrom
 00000
 
 Quadrado
-Azul
+Amarelo
 00000
 01110
 01110
@@ -31,7 +31,7 @@ Azul
 00000
 
 Triângulo
-Vermelho
+Marrom
 00000
 00100
 01110
@@ -39,55 +39,23 @@ Vermelho
 00000
 
 Trapézio
-Roxo
+Amarelo
 00000
 00111
 01110
 11100
 00000
 
-Triângulo
+Círculo
 Rosa
 00000
 01110
-01110
-01110
-00000
-
-Quadrado
-Branco
-00000
-00100
-01110
 11111
-00000
-
-Quadrado
-Preto
-00000
-00100
 01110
-11111
 00000
 
-Quadrado
-Dourado
-00000
-00100
-01110
-11111
-00000
-
-Quadrado
-Lilás
-00000
-00100
-01110
-11111
-00000
-
-Quadrado
-Bege
+Triângulo
+Vermelho
 00000
 00100
 01110
