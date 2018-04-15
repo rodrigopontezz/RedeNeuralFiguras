@@ -10,7 +10,7 @@
  *	 Professor:		Márcio Piva
  * 
  *	 @version 1.1
- * 	 GitHub: https://github.com/rodrigopontezz/RedeNeuralFormas
+ * 	 GitHub: https://github.com/rodrigopontezz/RedeNeuralFiguras
  */
 
 import java.io.BufferedReader;
