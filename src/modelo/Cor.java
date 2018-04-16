@@ -3,7 +3,7 @@ package modelo;
 /*	 Implementação de como a rede neural reconhece cores a partir do dataset.
  * 
  * 	 @author Rodrigo Pontes
- *	 @version 1.1
+ *	 @version 2.0
  */
 
 public class Cor implements Treinavel {
@@ -24,11 +24,11 @@ public class Cor implements Treinavel {
 	public static int getTotalCores() {
 		return totalCores;
 	}
-	
-	public static void setTotalCores(int totalCores) {
-		Cor.totalCores = totalCores;
-	}
-	
+
+        public static void setTotalCores(int totalCores) {
+            Cor.totalCores = totalCores;
+        }
+        
 	public String getNome() {
 		return nome;
 	}
@@ -42,7 +42,7 @@ public class Cor implements Treinavel {
 		return targetCor;
 	}
 	
-	/* M�todo que gera um target �nico para cada cor existente.
+	/* Método que gera um target único para cada cor existente.
 	 */
 	public void setTargetCor(int count) {
 		StringBuilder str = new StringBuilder();

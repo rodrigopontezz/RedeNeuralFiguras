@@ -3,14 +3,13 @@ package modelo;
 /*	 Implementação de como a rede neural reconhece formas a partir do dataset.
  * 
  * 	 @author Rodrigo Pontes
- *	 @version 1.1
+ *	 @version 2.0
  */
 
 public class Forma implements Treinavel {
 	private static int totalFormas = 0;
 	private final int id;
 	private String nome;
-	private char [][] matriz;
 	private String targetForma;
 
 	public Forma() {
@@ -25,11 +24,11 @@ public class Forma implements Treinavel {
 	public static int getTotalFormas() {
 		return totalFormas;
 	}
-	
-	public static void setTotalFormas(int totalFormas) {
-		Forma.totalFormas = totalFormas;
-	}
-	
+
+        public static void setTotalFormas(int totalFormas) {
+                Forma.totalFormas = totalFormas;
+        }
+        
 	public String getNome() {
 		return nome;
 	}
@@ -38,20 +37,12 @@ public class Forma implements Treinavel {
 		this.nome = nome;
 	}
 	
-	public char[][] getMatriz() {
-		return matriz;
-	}
-	
-	public void setMatriz(char[][] matriz) {
-		this.matriz = matriz;
-	}
-	
 	@Override
 	public String getTarget() {
 		return targetForma;
 	}
 	
-	/* M�todo que gera um target �nico para cada forma existente.
+	/* Método que gera um target único para cada forma existente.
 	 */
 	public void setTargetForma(int count) {
 		StringBuilder str = new StringBuilder();

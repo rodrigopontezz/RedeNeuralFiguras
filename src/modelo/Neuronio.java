@@ -3,7 +3,7 @@ package modelo;
 /*	 Implementação de neurônios que treinarão a rede neural.
  * 
  * 	 @author Rodrigo Pontes
- *	 @version 1.1
+ *	 @version 2.0
  */
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class Neuronio {
 	private double [] peso;
 	private double taxaAprendizado;
 	
-	/*	Construtor que inicializa o neur�nio de acordo com a interface
+	/*  Construtor que inicializa o neurônio de acordo com a interface
 	 *  Treinavel, que pode receber uma lista de formas ou cores para
 	 *  treinamento.
 	 */
@@ -36,8 +36,8 @@ public class Neuronio {
 		}
 	}
 	
-	/* M�todo que gera o vetor de targets para o neur�nio. Cada item "i" deste
-	 * vetor representa a resposta desej�vel para o conjunto de est�mulos "i"
+	/* Método que gera o vetor de targets para o neurônio. Cada item "i" deste
+	 * vetor representa a resposta desejável para o conjunto de estómulos "i"
 	 * que receber posteriormente. 
 	 */
 	public void gerarVetorTarget(List<Treinavel> listaTreinavel, int indice) {
@@ -54,15 +54,15 @@ public class Neuronio {
 		}
 	}
 	
-	/* M�todo que recebe um conjunto de est�mulos "i", calcula o somat�rio de
-	 * acordo com o vetor de pesos atual do neur�nio e arrisca um palpite. Caso
-	 * o palpite do neur�nio n�o corresponda com a resposta desej�vel (vetor de 
+	/* Método que recebe um conjunto de estímulos "i", calcula o somatório de
+	 * acordo com o vetor de pesos atual do neurônio e arrisca um palpite. Caso
+	 * o palpite do neurônio não corresponda com a resposta desejável (vetor de 
 	 * targets "i"), reajusta os pesos.
 	 */
 	public boolean aplicarEstimulos(double [] estimulos, int indiceFigura) {
 		double somatorio = 0.0;
 		
-		/* C�LCULO DO SOMAT�RIO */
+		/* CÁLCULO DO SOMATÓRIO */
 		for (int i = 0; i < quantidadeEstimulos; i++) {
 			somatorio += estimulos[i] * peso[i];
 		}
@@ -82,8 +82,8 @@ public class Neuronio {
 		return false;
 	}
 	
-	/* M�todo que reajusta os pesos do neur�nio de acordo com um conjunto
-	 * de est�mulos "i" recebido.
+	/* Método que reajusta os pesos do neurônio de acordo com um conjunto
+	 * de estímulos "i" recebido.
 	 */
 	public void ajustarPesos(double [] estimulos, int indiceFigura) {
 		for (int i = 0; i < quantidadeEstimulos; i++) {

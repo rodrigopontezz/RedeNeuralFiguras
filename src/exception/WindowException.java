@@ -1,6 +1,6 @@
 package exception;
 
-/*	 Exceção usada caso uma janela não possa ser aberta.
+/*	 Exceção lançada caso uma janela não possa ser aberta.
  * 
  *       @author Rodrigo Pontes
  *	 @version 2.0

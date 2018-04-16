@@ -3,7 +3,7 @@ package modelo;
 /*	 Implementa uma matriz de estímulos e seus métodos.
  * 
  * 	 @author Rodrigo Pontes
- *	 @version 1.1
+ *	 @version 2.0
  */
 
 public class Estimulo {
@@ -15,14 +15,14 @@ public class Estimulo {
 		gerarEstimulos(tamanhoDataset);
 	}
 	
-	/* M�todo que calcula a quantidade de est�mulos necess�rios para
-	 * representar o dataset recebido, incluindo o est�mulo fixo (bias).
+	/* Método que calcula a quantidade de estímulos necessários para
+	 * representar o dataset recebido, incluindo o estímulo fixo (bias).
 	 */
 	public void calcularQuantidadeEstimulos(int tamanhoDataset) {
 		this.quantidadeEstimulos = (int) (Math.ceil(Math.sqrt(tamanhoDataset)) + 1);
 	}
 	
-	/* M�todo para gera��o da matriz de est�mulos.
+	/* Método para geração da matriz de estímulos.
 	 */
 	public void gerarEstimulos(int tamanhoDataset) {
 		estimulos = new double[tamanhoDataset][quantidadeEstimulos];
@@ -44,9 +44,9 @@ public class Estimulo {
 		}
 	}
 	
-	/* M�todo que recebe um n�mero em decimal, e o tamanho em caracteres
-	 * que a String de retorno deve conter. Retorna o n�mero transformado
-	 * em bin�rio.
+	/* Método que recebe um número em decimal, e o tamanho em caracteres
+	 * que a String de retorno deve conter. Retorna o número transformado
+	 * em binário.
 	 */
 	public String transformaDecimalEmBinario(int numero, int tamanho) {
 		int d = numero;

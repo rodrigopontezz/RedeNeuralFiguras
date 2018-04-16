@@ -3,7 +3,7 @@ package modelo;
 /*	 Implementação de figuras, que representam a união de uma forma e uma cor.
  * 
  * 	 @author Rodrigo Pontes
- *	 @version 1.1
+ *	 @version 2.0
  */
 
 public class Figura {
@@ -22,7 +22,7 @@ public class Figura {
 		return id;
 	}
 	
-	/* M�todo que calcula o target absoluto da figura concatenando os
+	/* Método que calcula o target absoluto da figura concatenando os
 	 * targets parciais da forma e da cor.
 	 */
 	public void calcularTarget() {
@@ -37,9 +37,11 @@ public class Figura {
 		return totalFiguras;
 	}
 
-	public static void setTotalFiguras(int totalFiguras) {
-		Figura.totalFiguras = totalFiguras;
-	}
+        public static void setTotalFiguras(int totalFiguras) {
+                Figura.totalFiguras = totalFiguras;
+        }
+        
+        
 
 	public Forma getForma() {
 		return forma;

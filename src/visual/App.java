@@ -2,6 +2,7 @@ package visual;
 
 
 import exception.InitException;
+import exception.TreinamentoException;
 import javax.swing.JOptionPane;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -12,11 +13,28 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
 import exception.WindowException;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import modelo.Cor;
+import modelo.Figura;
+import modelo.Forma;
+import modelo.Treinamento;
 
 
 public class App extends javax.swing.JFrame {
 
+    List<javax.swing.JLabel> listaLblFiguras;
+    List<javax.swing.JLabel> listaLblNeuronios;
+    List<javax.swing.JLabel> listaLblReconhece;
+    Treinamento treinador;
+    
     /**
      * Creates new form Principal
      */
@@ -34,6 +52,64 @@ public class App extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível encontrar o ícone \"favicon.png\".");
         }
+        
+        this.listaLblFiguras = new ArrayList<>();
+        this.listaLblFiguras.add(lblFigura1);
+        this.listaLblFiguras.add(lblFigura2);
+        this.listaLblFiguras.add(lblFigura3);
+        this.listaLblFiguras.add(lblFigura4);
+        this.listaLblFiguras.add(lblFigura5);
+        this.listaLblFiguras.add(lblFigura6);
+        this.listaLblFiguras.add(lblFigura7);
+        this.listaLblFiguras.add(lblFigura8);
+        this.listaLblFiguras.add(lblFigura9);
+        this.listaLblFiguras.add(lblFigura10);
+        
+        for(javax.swing.JLabel label : listaLblFiguras) {
+            label.setText("");
+            label.setVisible(false);
+            label.setEnabled(false);
+        }
+
+        this.listaLblNeuronios = new ArrayList<>();
+        this.listaLblNeuronios.add(lblNeuronio1);
+        this.listaLblNeuronios.add(lblNeuronio2);
+        this.listaLblNeuronios.add(lblNeuronio3);
+        this.listaLblNeuronios.add(lblNeuronio4);
+        this.listaLblNeuronios.add(lblNeuronio5);
+        this.listaLblNeuronios.add(lblNeuronio6);
+        this.listaLblNeuronios.add(lblNeuronio7);
+        this.listaLblNeuronios.add(lblNeuronio8);
+        this.listaLblNeuronios.add(lblNeuronio9);
+        this.listaLblNeuronios.add(lblNeuronio10);
+        this.listaLblNeuronios.add(lblNeuronio11);
+        this.listaLblNeuronios.add(lblNeuronio12);
+        
+        for(javax.swing.JLabel label : listaLblNeuronios) {
+            label.setText("");
+            label.setVisible(false);
+        }
+        
+        this.listaLblReconhece = new ArrayList<>();
+        this.listaLblReconhece.add(lblReconhece1);
+        this.listaLblReconhece.add(lblReconhece2);
+        this.listaLblReconhece.add(lblReconhece3);
+        this.listaLblReconhece.add(lblReconhece4);
+        this.listaLblReconhece.add(lblReconhece5);
+        this.listaLblReconhece.add(lblReconhece6);
+        this.listaLblReconhece.add(lblReconhece7);
+        this.listaLblReconhece.add(lblReconhece8);
+        this.listaLblReconhece.add(lblReconhece9);
+        this.listaLblReconhece.add(lblReconhece10);
+        this.listaLblReconhece.add(lblReconhece11);
+        this.listaLblReconhece.add(lblReconhece12);
+        
+        for(javax.swing.JLabel label : listaLblReconhece) {
+            label.setText("");
+            label.setVisible(false);
+        }
+        
+        this.lblAvisoDataset.setVisible(false);
     }
 
     /**
@@ -45,13 +121,48 @@ public class App extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTeste = new javax.swing.JLabel();
         lblDialogo = new javax.swing.JLabel();
         cmbBoxDataset = new javax.swing.JComboBox<>();
         btnParar = new javax.swing.JButton();
         btnEscolher = new javax.swing.JButton();
         btnProximaEpoca = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblDataset = new javax.swing.JLabel();
+        separador = new javax.swing.JSeparator();
+        lblFigura1 = new javax.swing.JLabel();
+        lblFigura2 = new javax.swing.JLabel();
+        lblFigura3 = new javax.swing.JLabel();
+        lblFigura4 = new javax.swing.JLabel();
+        lblFigura5 = new javax.swing.JLabel();
+        lblFigura6 = new javax.swing.JLabel();
+        lblFigura7 = new javax.swing.JLabel();
+        lblFigura8 = new javax.swing.JLabel();
+        lblFigura9 = new javax.swing.JLabel();
+        lblFigura10 = new javax.swing.JLabel();
+        lblAvisoDataset = new javax.swing.JLabel();
+        lblNeuronio1 = new javax.swing.JLabel();
+        lblNeuronio2 = new javax.swing.JLabel();
+        lblNeuronio3 = new javax.swing.JLabel();
+        lblNeuronio4 = new javax.swing.JLabel();
+        lblNeuronio5 = new javax.swing.JLabel();
+        lblNeuronio6 = new javax.swing.JLabel();
+        lblNeuronio7 = new javax.swing.JLabel();
+        lblNeuronio8 = new javax.swing.JLabel();
+        lblNeuronio9 = new javax.swing.JLabel();
+        lblNeuronio10 = new javax.swing.JLabel();
+        lblNeuronio11 = new javax.swing.JLabel();
+        lblNeuronio12 = new javax.swing.JLabel();
+        lblReconhece1 = new javax.swing.JLabel();
+        lblReconhece2 = new javax.swing.JLabel();
+        lblReconhece3 = new javax.swing.JLabel();
+        lblReconhece4 = new javax.swing.JLabel();
+        lblReconhece5 = new javax.swing.JLabel();
+        lblReconhece6 = new javax.swing.JLabel();
+        lblReconhece7 = new javax.swing.JLabel();
+        lblReconhece8 = new javax.swing.JLabel();
+        lblReconhece9 = new javax.swing.JLabel();
+        lblReconhece10 = new javax.swing.JLabel();
+        lblReconhece11 = new javax.swing.JLabel();
+        lblReconhece12 = new javax.swing.JLabel();
         barraMenu = new javax.swing.JMenuBar();
         menuTreinamento = new javax.swing.JMenu();
         subMenuIniciar = new javax.swing.JMenuItem();
@@ -71,8 +182,6 @@ public class App extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(960, 720));
         setPreferredSize(new java.awt.Dimension(960, 720));
         setResizable(false);
-
-        lblTeste.setText("  Círculo Vermelho");
 
         lblDialogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/balaoDialogoPadrao.png"))); // NOI18N
 
@@ -101,8 +210,108 @@ public class App extends javax.swing.JFrame {
         btnProximaEpoca.setText("Próxima Época");
         btnProximaEpoca.setEnabled(false);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("DATASET:");
+        lblDataset.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblDataset.setText("DATASET:");
+
+        lblFigura1.setText("jLabel1");
+        lblFigura1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblFigura1MouseClicked(evt);
+            }
+        });
+
+        lblFigura2.setText("jLabel1");
+
+        lblFigura3.setText("jLabel1");
+
+        lblFigura4.setText("jLabel1");
+
+        lblFigura5.setText("jLabel1");
+
+        lblFigura6.setText("jLabel1");
+
+        lblFigura7.setText("jLabel1");
+
+        lblFigura8.setText("jLabel1");
+
+        lblFigura9.setText("jLabel1");
+
+        lblFigura10.setText("jLabel1");
+
+        lblAvisoDataset.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        lblAvisoDataset.setText("<html>Dataset muito grande,<br>figuras excedentes não<br> serão exibidas</html>");
+
+        lblNeuronio1.setText("jLabel1");
+
+        lblNeuronio2.setText("jLabel1");
+
+        lblNeuronio3.setText("jLabel1");
+
+        lblNeuronio4.setText("jLabel1");
+
+        lblNeuronio5.setText("jLabel1");
+
+        lblNeuronio6.setText("jLabel1");
+
+        lblNeuronio7.setText("jLabel1");
+
+        lblNeuronio8.setText("jLabel1");
+
+        lblNeuronio9.setText("jLabel1");
+
+        lblNeuronio10.setText("jLabel1");
+
+        lblNeuronio11.setText("jLabel1");
+
+        lblNeuronio12.setText("jLabel1");
+
+        lblReconhece1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblReconhece1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblReconhece1.setText("jLabel1");
+
+        lblReconhece2.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblReconhece2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblReconhece2.setText("jLabel1");
+
+        lblReconhece3.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblReconhece3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblReconhece3.setText("jLabel1");
+
+        lblReconhece4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblReconhece4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblReconhece4.setText("jLabel1");
+
+        lblReconhece5.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblReconhece5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblReconhece5.setText("jLabel1");
+
+        lblReconhece6.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblReconhece6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblReconhece6.setText("jLabel1");
+
+        lblReconhece7.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblReconhece7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblReconhece7.setText("jLabel1");
+
+        lblReconhece8.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblReconhece8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblReconhece8.setText("jLabel1");
+
+        lblReconhece9.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblReconhece9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblReconhece9.setText("jLabel1");
+
+        lblReconhece10.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblReconhece10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblReconhece10.setText("jLabel1");
+
+        lblReconhece11.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblReconhece11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblReconhece11.setText("jLabel1");
+
+        lblReconhece12.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        lblReconhece12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblReconhece12.setText("jLabel1");
 
         menuTreinamento.setText("Treinamento");
         menuTreinamento.addActionListener(new java.awt.event.ActionListener() {
@@ -198,6 +407,87 @@ public class App extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(separador, javax.swing.GroupLayout.PREFERRED_SIZE, 919, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblFigura1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblFigura2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblFigura3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblFigura4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblFigura5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblFigura6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblFigura7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblFigura8, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblFigura9, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(lblFigura10, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblAvisoDataset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(lblReconhece1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblNeuronio1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblNeuronio2, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                    .addComponent(lblReconhece2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblNeuronio3, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                    .addComponent(lblReconhece3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblNeuronio4, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                    .addComponent(lblReconhece4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblNeuronio5, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                    .addComponent(lblReconhece5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblNeuronio6, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                    .addComponent(lblReconhece6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblNeuronio7, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                    .addComponent(lblReconhece7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblNeuronio8, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                    .addComponent(lblReconhece8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblNeuronio9, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                    .addComponent(lblReconhece9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblNeuronio10, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                    .addComponent(lblReconhece10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblNeuronio12, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                    .addComponent(lblReconhece11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblNeuronio11, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(lblReconhece12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addGap(19, 19, 19))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -205,7 +495,7 @@ public class App extends javax.swing.JFrame {
                         .addComponent(lblDialogo, javax.swing.GroupLayout.PREFERRED_SIZE, 919, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(72, 72, 72)
-                        .addComponent(jLabel1)
+                        .addComponent(lblDataset)
                         .addGap(30, 30, 30)
                         .addComponent(cmbBoxDataset, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
@@ -213,10 +503,7 @@ public class App extends javax.swing.JFrame {
                         .addGap(92, 92, 92)
                         .addComponent(btnProximaEpoca, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnParar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addComponent(lblTeste)))
+                        .addComponent(btnParar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -230,10 +517,51 @@ public class App extends javax.swing.JFrame {
                     .addComponent(btnParar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbBoxDataset, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnProximaEpoca, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(106, 106, 106)
-                .addComponent(lblTeste)
-                .addContainerGap(422, Short.MAX_VALUE))
+                    .addComponent(lblDataset))
+                .addGap(18, 18, 18)
+                .addComponent(separador, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFigura3)
+                    .addComponent(lblFigura4)
+                    .addComponent(lblFigura5)
+                    .addComponent(lblFigura6)
+                    .addComponent(lblFigura7)
+                    .addComponent(lblFigura8)
+                    .addComponent(lblFigura9)
+                    .addComponent(lblFigura10)
+                    .addComponent(lblAvisoDataset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFigura2)
+                    .addComponent(lblFigura1))
+                .addGap(72, 72, 72)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblReconhece1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblReconhece2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblReconhece3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblReconhece4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblReconhece5, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblReconhece6, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblReconhece7, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblReconhece8, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblReconhece9, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblReconhece10, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblReconhece11, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblReconhece12, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNeuronio1)
+                    .addComponent(lblNeuronio2)
+                    .addComponent(lblNeuronio3)
+                    .addComponent(lblNeuronio4)
+                    .addComponent(lblNeuronio5)
+                    .addComponent(lblNeuronio6)
+                    .addComponent(lblNeuronio7)
+                    .addComponent(lblNeuronio8)
+                    .addComponent(lblNeuronio9)
+                    .addComponent(lblNeuronio10)
+                    .addComponent(lblNeuronio11)
+                    .addComponent(lblNeuronio12))
+                .addContainerGap(223, Short.MAX_VALUE))
         );
 
         pack();
@@ -308,6 +636,23 @@ public class App extends javax.swing.JFrame {
         btnParar.setEnabled(false);
         btnProximaEpoca.setEnabled(false);        
         
+        Figura.setTotalFiguras(0);
+        Forma.setTotalFormas(0);
+        Cor.setTotalCores(0);
+        
+        for(javax.swing.JLabel label : listaLblFiguras) {
+            label.setVisible(false);
+            label.setEnabled(false);
+        }
+        
+        for(javax.swing.JLabel label : listaLblNeuronios) {
+            label.setVisible(false);
+        }
+        
+        for(javax.swing.JLabel label : listaLblReconhece) {
+            label.setVisible(false);
+        }
+        
         mudaBalaoDialogo("balaoDialogoPadrao.png");
     }//GEN-LAST:event_subMenuPararActionPerformed
 
@@ -325,32 +670,78 @@ public class App extends javax.swing.JFrame {
         
         mudaBalaoDialogo("balaoDialogoIniciarTreinamento.png");
         
-        
-        
-        /*try {
-            //Carrega as imagens
-            BufferedImage image = ImageIO.read(new File(".\\src\\imagens\\corVermelho.png"));
-            BufferedImage image2 = ImageIO.read(new File(".\\src\\imagens\\formaCirculo.png"));
-            int w = image2.getWidth();
-            int h = image2.getHeight();
-            //Obtém o Graphics2D da imagem 1 (fundo), para desenhar sobre ela o logo.
-            Graphics2D graphics = image.createGraphics();
-            graphics.drawImage(image2, 0, 0, w, h, null);
-            graphics.dispose(); //Libera os recursos ocupados pela "Caneta"
-            //Use esse ImageIcon para desenhar no seu form
-            ImageIcon icon = new ImageIcon(image);
-            //icon.paintIcon(lblTeste, graphics, 50, 50);
-            lblTeste.setIcon(icon);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível encontrar as imagens do projeto.\n\n"
-                    + "Baixe o projeto completo e funcional na íntegra em:\n"
-                    + "https://github.com/rodrigopontezz/RedeNeuralFiguras\n");
-        }*/
+        /* descobrir qual método de treinamento */
+        String metodoTreinamento = "total";
+        try {
+            
+            treinador = new Treinamento(dataset,metodoTreinamento);
+            
+            if (metodoTreinamento.equals("total")) {
+                
+                for(int i = 0; i < Figura.getTotalFiguras() && i < 10; i++) {
+                    
+                    //Pega as imagens de forma e cor para desenhá-las no form
+                    String pathForma = ".\\src\\imagens\\forma" + tirarAcentos(treinador.getListaFiguras().get(i).getForma().getNome()) + ".png";
+                    String pathCor = ".\\src\\imagens\\cor" + tirarAcentos(treinador.getListaFiguras().get(i).getCor().getNome()) + ".png";
+                    
+                    try {
+                        //Carrega as imagens
+                        BufferedImage image = ImageIO.read(new File(pathCor));
+                        BufferedImage image2 = ImageIO.read(new File(pathForma));
+                        int w = image2.getWidth();
+                        int h = image2.getHeight();
+                        
+                        //Obtém o Graphics2D da imagem 1 (fundo), para desenhar sobre ela
+                        Graphics2D graphics = image.createGraphics();
+                        graphics.drawImage(image2, 0, 0, w, h, null);
+                        graphics.dispose(); //Libera os recursos ocupados pela "Caneta"
+                        
+                        //Use esse ImageIcon para desenhar no form
+                        ImageIcon icon = new ImageIcon(image);
+                        //icon.paintIcon(lblTeste, graphics, 50, 50);
+                        listaLblFiguras.get(i).setIcon(icon);
+                        
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, "Não foi possível encontrar as imagens do projeto.\n\n"
+                                + "Baixe o projeto funcional na íntegra em:\n"
+                                + "https://github.com/rodrigopontezz/RedeNeuralFiguras\n");
+                    }
+
+                    listaLblFiguras.get(i).setVisible(true);
+                    listaLblFiguras.get(i).setEnabled(true);
+                }                
+                
+                if (Figura.getTotalFiguras() > 10)  lblAvisoDataset.setVisible(true);
+                
+                for (int i = 0; i < (Forma.getTotalFormas()+Cor.getTotalCores()) ; i++) {
+                    ImageIcon icon = new ImageIcon(".\\src\\imagens\\neuronioAzul.png");
+                    listaLblNeuronios.get(i).setIcon(icon);
+                    listaLblNeuronios.get(i).setVisible(true);
+                    
+                    if (i < Forma.getTotalFormas())  listaLblReconhece.get(i).setText("<html>Reconhece<br>" + treinador.getListaFormas().get(i).getNome());
+                    else  listaLblReconhece.get(i).setText("<html>Reconhece<br>" + treinador.getListaCores().get(i-Forma.getTotalFormas()).getNome());
+                    
+                    listaLblReconhece.get(i).setVisible(true);
+                }
+                
+            } else {
+            
+            }
+        } catch (TreinamentoException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+            btnPararActionPerformed(evt);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }//GEN-LAST:event_btnEscolherActionPerformed
 
     private void menuDatasetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDatasetActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuDatasetActionPerformed
+
+    private void lblFigura1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFigura1MouseClicked
+        //for (int i = 0; treinador.ge)
+    }//GEN-LAST:event_lblFigura1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -471,6 +862,12 @@ public class App extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(".\\src\\imagens\\" + nomeImagem);
         lblDialogo.setIcon(icon);
     }
+    
+    public static String tirarAcentos(String str) {
+        String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD); 
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(nfdNormalizedString).replaceAll("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
@@ -478,14 +875,49 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JButton btnParar;
     private javax.swing.JButton btnProximaEpoca;
     private javax.swing.JComboBox<String> cmbBoxDataset;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JLabel lblAvisoDataset;
+    private javax.swing.JLabel lblDataset;
     private javax.swing.JLabel lblDialogo;
-    private javax.swing.JLabel lblTeste;
+    private javax.swing.JLabel lblFigura1;
+    private javax.swing.JLabel lblFigura10;
+    private javax.swing.JLabel lblFigura2;
+    private javax.swing.JLabel lblFigura3;
+    private javax.swing.JLabel lblFigura4;
+    private javax.swing.JLabel lblFigura5;
+    private javax.swing.JLabel lblFigura6;
+    private javax.swing.JLabel lblFigura7;
+    private javax.swing.JLabel lblFigura8;
+    private javax.swing.JLabel lblFigura9;
+    private javax.swing.JLabel lblNeuronio1;
+    private javax.swing.JLabel lblNeuronio10;
+    private javax.swing.JLabel lblNeuronio11;
+    private javax.swing.JLabel lblNeuronio12;
+    private javax.swing.JLabel lblNeuronio2;
+    private javax.swing.JLabel lblNeuronio3;
+    private javax.swing.JLabel lblNeuronio4;
+    private javax.swing.JLabel lblNeuronio5;
+    private javax.swing.JLabel lblNeuronio6;
+    private javax.swing.JLabel lblNeuronio7;
+    private javax.swing.JLabel lblNeuronio8;
+    private javax.swing.JLabel lblNeuronio9;
+    private javax.swing.JLabel lblReconhece1;
+    private javax.swing.JLabel lblReconhece10;
+    private javax.swing.JLabel lblReconhece11;
+    private javax.swing.JLabel lblReconhece12;
+    private javax.swing.JLabel lblReconhece2;
+    private javax.swing.JLabel lblReconhece3;
+    private javax.swing.JLabel lblReconhece4;
+    private javax.swing.JLabel lblReconhece5;
+    private javax.swing.JLabel lblReconhece6;
+    private javax.swing.JLabel lblReconhece7;
+    private javax.swing.JLabel lblReconhece8;
+    private javax.swing.JLabel lblReconhece9;
     private javax.swing.JMenu menuAjuda;
     private javax.swing.JMenu menuDataset;
     private javax.swing.JMenu menuTreinamento;
+    private javax.swing.JSeparator separador;
     private javax.swing.JMenuItem subMenuComoUsar;
     private javax.swing.JMenuItem subMenuCriarDataset;
     private javax.swing.JMenuItem subMenuDeletarDataset;
