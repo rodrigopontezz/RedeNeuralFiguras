@@ -97,6 +97,10 @@ public class Neuronio {
 		}
 		return '0';
 	}
+        
+        public boolean acertouPalpite(int x) {
+            return (this.palpite[x] == this.target[x]);
+        }
 	
 	public double[] getPeso() {
 		return peso;
