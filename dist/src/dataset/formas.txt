@@ -1,0 +1,6 @@
+Triângulo
+Quadrado
+Círculo
+Trapézio
+Coração
+Estrela
