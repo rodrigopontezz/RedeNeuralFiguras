@@ -101,6 +101,10 @@ public class Neuronio {
         public boolean acertouPalpite(int x) {
             return (this.palpite[x] == this.target[x]);
         }
+        
+        public int getTarget(int x) {
+            return this.target[x];
+        }
 	
 	public double[] getPeso() {
 		return peso;

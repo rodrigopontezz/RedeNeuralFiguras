@@ -198,58 +198,58 @@ public class Treinamento {
 
         this.epoca++;
 
-            for (Figura figura : this.listaFiguras) {
-                    StringBuffer str = new StringBuffer();
+        for (Figura figura : this.listaFiguras) {
+                StringBuffer str = new StringBuffer();
 
-                    System.out.println("_____________________");
-                    System.out.println();
-                    System.out.println("Figura " + (figura.getId()+1) + ": " + figura.getForma().getNome() + " " + figura.getCor().getNome());
-                    System.out.println();
-                    System.out.println("Os neurônios palpitam: ");
-                    System.out.println();
-                    System.out.print("FORMAS");
-                    for (int i = 0; i < this.listaNeuroniosForma.size(); i++) {
+                System.out.println("_____________________");
+                System.out.println();
+                System.out.println("Figura " + (figura.getId()+1) + ": " + figura.getForma().getNome() + " " + figura.getCor().getNome());
+                System.out.println();
+                System.out.println("Os neurônios palpitam: ");
+                System.out.println();
+                System.out.print("FORMAS");
+                for (int i = 0; i < this.listaNeuroniosForma.size(); i++) {
 
 
-                            System.out.print("	Neurônio " + (i+1) + ":    Eu acho que... ");
-                            char ch = this.listaNeuroniosForma.get(i).getPalpiteAt(figura.getForma().getId());
+                        System.out.print("	Neurônio " + (i+1) + ":    Eu acho que... ");
+                        char ch = this.listaNeuroniosForma.get(i).getPalpiteAt(figura.getForma().getId());
 
-                            if (ch == '1') {
-                                    System.out.println("é um(a) " + this.listaFormas.get(i).getNome() + "!");
-                            } else {
-                                    System.out.println("NÃO É um(a) " + this.listaFormas.get(i).getNome() + "!");
-                            }
-                            str.append(ch);
-                    }
+                        if (ch == '1') {
+                                System.out.println("é um(a) " + this.listaFormas.get(i).getNome() + "!");
+                        } else {
+                                System.out.println("NÃO É um(a) " + this.listaFormas.get(i).getNome() + "!");
+                        }
+                        str.append(ch);
+                }
 
-                    System.out.println();
+                System.out.println();
 
-                    System.out.print("CORES");
-                    for (int i = 0; i < this.listaNeuroniosCor.size(); i++) {
+                System.out.print("CORES");
+                for (int i = 0; i < this.listaNeuroniosCor.size(); i++) {
 
-                            System.out.print("	Neurônio " + (this.listaNeuroniosForma.size()+i+1) + ":    Eu acho que... ");
-                            char ch = this.listaNeuroniosCor.get(i).getPalpiteAt(figura.getCor().getId());
+                        System.out.print("	Neurônio " + (this.listaNeuroniosForma.size()+i+1) + ":    Eu acho que... ");
+                        char ch = this.listaNeuroniosCor.get(i).getPalpiteAt(figura.getCor().getId());
 
-                            if (ch == '1') {
-                                    System.out.println("é " + this.listaCores.get(i).getNome() + "!");
-                            } else {
-                                    System.out.println("NÃO É " + this.listaCores.get(i).getNome() + "!");
-                            }
-                            str.append(ch);
-                    }
+                        if (ch == '1') {
+                                System.out.println("é " + this.listaCores.get(i).getNome() + "!");
+                        } else {
+                                System.out.println("NÃO É " + this.listaCores.get(i).getNome() + "!");
+                        }
+                        str.append(ch);
+                }
 
-                    System.out.println();
-                    System.out.println();
+                System.out.println();
+                System.out.println();
 
-                    if(figura.getTarget().equals(str.toString())) {
-                            System.out.println("Neurônios ACERTARAM o palpite!");
-                    } else {
-                            System.out.println("Neurônios ERRARAM o palpite!");
-                    }
-                    System.out.println();
-            }
+                if(figura.getTarget().equals(str.toString())) {
+                        System.out.println("Neurônios ACERTARAM o palpite!");
+                } else {
+                        System.out.println("Neurônios ERRARAM o palpite!");
+                }
+                System.out.println();
+        }
 
-            return this.erro;
+        return this.erro;
         
     }
     

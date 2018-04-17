@@ -242,7 +242,8 @@ public class App extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Perceptron - Reconhecimento de Figuras");
-        setMinimumSize(new java.awt.Dimension(960, 720));
+        setMinimumSize(new java.awt.Dimension(960, 695));
+        setPreferredSize(new java.awt.Dimension(960, 695));
         setResizable(false);
 
         lblDialogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/balaoDialogoPadrao.png"))); // NOI18N
@@ -643,7 +644,7 @@ public class App extends javax.swing.JFrame {
         menuAjuda.setText("Ajuda");
 
         subMenuComoUsar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, 0));
-        subMenuComoUsar.setText("Como Utilizar");
+        subMenuComoUsar.setText("Como Usar?");
         subMenuComoUsar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuComoUsarActionPerformed(evt);
@@ -819,7 +820,6 @@ public class App extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
                         .addComponent(lblAvisoDataset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40))
                     .addGroup(layout.createSequentialGroup()
@@ -890,7 +890,7 @@ public class App extends javax.swing.JFrame {
                     .addComponent(lblResposta10, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblResposta11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblResposta12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -906,11 +906,7 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_subMenuSobreActionPerformed
 
     private void subMenuComoUsarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuComoUsarActionPerformed
-        JOptionPane.showMessageDialog(null, "\n               ESCOLHA UM DATASET\n\n"
-                                             + "+ Escolha um dataset pré-definido, ou\n+ Crie o seu próprio dataset\n\n"
-                                             + "               INICIE O TREINAMENTO\n\n"
-                                             + "+ Escolha entre pular para o resultado final, ou  \n+ Assista o treinamento a cada iteração\n\n");
-                                             
+        ComoUsar form = new ComoUsar(this, true);
     }//GEN-LAST:event_subMenuComoUsarActionPerformed
 
     private void subMenuIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuIniciarActionPerformed
@@ -931,7 +927,7 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_subMenuIniciarActionPerformed
 
     private void subMenuCriarDatasetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCriarDatasetActionPerformed
-        FormCriarDataset formDataset = new FormCriarDataset(this, true);
+        CriarDataset formDataset = new CriarDataset(this, true);
     }//GEN-LAST:event_subMenuCriarDatasetActionPerformed
 
     private void subMenuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuSairActionPerformed
@@ -1312,11 +1308,12 @@ public class App extends javax.swing.JFrame {
     public void mudaNeuronios (int figura) {
         int palpiteForma = treinador.getListaFiguras().get(figura).getForma().getId();
         int palpiteCor = treinador.getListaFiguras().get(figura).getCor().getId();
-        
+             
         int i = 0;
         for (javax.swing.JLabel label : listaLblResposta) {
+            
             if (i < Forma.getTotalFormas()) {
-                
+  
                 if (treinador.getListaNeuroniosForma().get(i).getPalpiteAt(palpiteForma) == '1') {
                     label.setText("<html><center>É<br>" + treinador.getListaFormas().get(i).getNome() + "!");
                 } else {
@@ -1332,13 +1329,14 @@ public class App extends javax.swing.JFrame {
                 }
             }
             else if ((i - Forma.getTotalFormas()) < Cor.getTotalCores()) {
+                  
                 if (treinador.getListaNeuroniosCor().get(i - Forma.getTotalFormas()).getPalpiteAt(palpiteCor) == '1') {
-                    label.setText("<html><center>É<br>" + treinador.getListaCores().get(i - Forma.getTotalFormas()).getNome() + "!");
+                    label.setText("<html><center>É<br>" + treinador.getListaCores().get((i-Forma.getTotalFormas())).getNome() + "!");
                 } else {
-                    label.setText("<html><center>Não é<br>" + treinador.getListaCores().get(i - Forma.getTotalFormas()).getNome() + "...");
+                    label.setText("<html><center>Não é<br>" + treinador.getListaCores().get((i-Forma.getTotalFormas())).getNome() + "...");
                 }
                 
-                if (treinador.getListaNeuroniosCor().get((i-Forma.getTotalFormas())).acertouPalpite(palpiteCor)) {
+                if (treinador.getListaNeuroniosCor().get(i - Forma.getTotalFormas()).acertouPalpite(palpiteCor)) {
                     ImageIcon icon = new ImageIcon(".\\src\\imagens\\neuronioVerde.png");
                     listaLblNeuronios.get(i).setIcon(icon);
                 } else {
