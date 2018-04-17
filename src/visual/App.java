@@ -3,7 +3,6 @@ package visual;
 
 import exception.InitException;
 import exception.TreinamentoException;
-import javax.swing.JOptionPane;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -52,7 +51,7 @@ public class App extends javax.swing.JFrame {
             Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(caminhoImagem);
             setIconImage(iconeTitulo);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível encontrar o ícone \"favicon.png\".");
+            ExceptionWindow form = new ExceptionWindow(null, true, "Não foi possível encontrar o ícone \"favicon.png\".");
         }
         
         this.listaLblFiguras = new ArrayList<>();
@@ -897,12 +896,7 @@ public class App extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void subMenuSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuSobreActionPerformed
-        JOptionPane.showMessageDialog(null, "\nRede Neural Perceptron para reconhecimento de figuras a\npartir de um dataset textual.\n\n" 
-                                            + "Projeto desenvolvido para a disciplina Inteligência Artificial I        \n"
-                                            + "Curso: Ciências da Computação (UNISANTOS)\n"
-                                            + "Professor: Márcio Piva\n\n"  
-                                            + "Desenvolvedores:\n\nRodrigo Pontes\nLuana Quelhas\nDiego Assis\nHiero Bartholo\n\n"
-                                            + "Versão 2.0\n(04/2018)");
+        Sobre form = new Sobre(this, true);
     }//GEN-LAST:event_subMenuSobreActionPerformed
 
     private void subMenuComoUsarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuComoUsarActionPerformed
@@ -938,7 +932,7 @@ public class App extends javax.swing.JFrame {
         try {
             DeletarDataset formDeletar = new DeletarDataset(this, true);
         } catch (WindowException ex) {
-            JOptionPane.showMessageDialog(null, "Não há nenhum dataset personalizado para excluir!");
+            WarningWindow form = new WarningWindow(null, true, "Não há nenhum dataset para excluir.");
         }
     }//GEN-LAST:event_subMenuDeletarDatasetActionPerformed
 
@@ -1047,9 +1041,7 @@ public class App extends javax.swing.JFrame {
                     listaLblFiguras.get(i).setEnabled(true);
 
                 } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Não foi possível encontrar as imagens do projeto.\n\n"
-                            + "Baixe o projeto funcional na íntegra em:\n"
-                            + "https://github.com/rodrigopontezz/RedeNeuralFiguras\n");
+                    ExceptionWindow form = new ExceptionWindow(null, true, "Não foi possível encontrar as imagens do projeto.");
                 }
             }                
 
@@ -1066,10 +1058,11 @@ public class App extends javax.swing.JFrame {
                 listaLblReconhece.get(i).setVisible(true);
             }
         } catch (TreinamentoException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            ExceptionWindow form = new ExceptionWindow(null, true, ex.getMessage());
             btnPararActionPerformed(evt);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            ExceptionWindow form = new ExceptionWindow(null, true, ex.getMessage());
+            btnPararActionPerformed(evt);
         }
     }//GEN-LAST:event_btnEscolherActionPerformed
 
@@ -1221,9 +1214,7 @@ public class App extends javax.swing.JFrame {
                 }
             });
         } catch (IOException | InitException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage()
-                    + "\n\nBaixe o projeto funcional na íntegra em:\n"
-                    + "https://github.com/rodrigopontezz/RedeNeuralFiguras\n");
+            ExceptionWindow form = new ExceptionWindow(null, true, ex.getMessage());
         }
     }
     
@@ -1248,17 +1239,21 @@ public class App extends javax.swing.JFrame {
                     fileEntry.getName().equals("corRosa.png") ||
                     fileEntry.getName().equals("corVerde.png") ||
                     fileEntry.getName().equals("corVermelho.png") ||
+                    fileEntry.getName().equals("favicon.png") ||
                     fileEntry.getName().equals("formaCirculo.png") ||
                     fileEntry.getName().equals("formaCoracao.png") ||
                     fileEntry.getName().equals("formaEstrela.png") ||
                     fileEntry.getName().equals("formaQuadrado.png") ||
                     fileEntry.getName().equals("formaTrapezio.png") ||
-                    fileEntry.getName().equals("formaTriangulo.png")) check++;
+                    fileEntry.getName().equals("formaTriangulo.png") ||
+                    fileEntry.getName().equals("neuronioAzul.png") ||
+                    fileEntry.getName().equals("neuronioVerde.png") ||
+                    fileEntry.getName().equals("neuronioVermelho.png")) check++;
         }
         
-        if (check != 17) throw new InitException("Diretório src/imagens está corrompido.");
+        if (check != 21) throw new InitException("Diretório src/imagens está corrompido.");
         
-        file = new File(".\\src\\dataset\\figuras.txt");
+        file = new File(".\\src\\dataset\\dataset-padrao.txt");
         
         PrintWriter pw = new PrintWriter(new FileWriter(file));
         
@@ -1276,19 +1271,14 @@ public class App extends javax.swing.JFrame {
     public void adicionarDatasetsNaComboBox() {
         File folder = new File(".\\src\\dataset");
         
-        if (folder.listFiles().length <  3) {
-            JOptionPane.showMessageDialog(null, "Não foi possível acessar os arquivos de dataset.\n\n"
-                    + "Baixe o projeto funcional na íntegra em:\n"
-                    + "https://github.com/rodrigopontezz/RedeNeuralFiguras\n");
+        if (folder.listFiles().length <  1) {
+            ExceptionWindow form = new ExceptionWindow(null, true, "Não foi possível acessar os arquivos de dataset.");
             throw new WindowException();
         } else {
             for (final File fileEntry : folder.listFiles()) {
                 if (fileEntry.isFile()) {
                     String nomeDataset = fileEntry.getName();
-                    
-                    if (!nomeDataset.equals("formas.txt") && !nomeDataset.equals("cores.txt")) {
-                        cmbBoxDataset.addItem(nomeDataset);
-                    }
+                    cmbBoxDataset.addItem(nomeDataset);
                 }
             }
         }

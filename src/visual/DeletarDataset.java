@@ -5,12 +5,12 @@
  */
 package visual;
 
-import exception.WindowException;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
-import javax.swing.JOptionPane;
 import exception.WindowException;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 
 /**
  *
@@ -24,6 +24,11 @@ public class DeletarDataset extends javax.swing.JDialog {
     public DeletarDataset(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        /* Adicionando Ícone à janela */
+        URL caminhoImagem = this.getClass().getClassLoader().getResource("favicon.png");
+        Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(caminhoImagem);
+        setIconImage(iconeTitulo);
         
         /* Adicionando a cor de fundo*/
         this.getContentPane().setBackground(new java.awt.Color(255, 254, 240));
@@ -118,9 +123,9 @@ public class DeletarDataset extends javax.swing.JDialog {
         String delete = deletarDataset(folder, cmbBoxDataset.getSelectedItem().toString());
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         if (!delete.equals("")) {
-            JOptionPane.showMessageDialog(null, "O dataset \"" + delete + "\" foi excluído com sucesso!");
+            WarningWindow form = new WarningWindow(null, true, "O dataset \"" + delete + "\" foi excluído com sucesso!");
         } else {
-            JOptionPane.showMessageDialog(null, "Não foi possível excluir o dataset \"" + delete + "\".");
+            ExceptionWindow form = new ExceptionWindow(null, true, "Erro: Não foi possível excluir o dataset \"" + delete + "\".");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
@@ -169,14 +174,14 @@ public class DeletarDataset extends javax.swing.JDialog {
     public void adicionarDatasetsNaComboBox() {
         File folder = new File(".\\src\\dataset");
         
-        if (folder.listFiles().length <=  3) {
+        if (folder.listFiles().length <=  1) {
             throw new WindowException();
         } else {
             for (File fileEntry : folder.listFiles()) {
                 if (fileEntry.isFile()) {
                     String nomeDataset = fileEntry.getName();
 
-                    if (!nomeDataset.equals("figuras.txt") && !nomeDataset.equals("formas.txt") && !nomeDataset.equals("cores.txt")) {
+                    if (!nomeDataset.equals("dataset-padrao.txt")) {
                         cmbBoxDataset.addItem(nomeDataset);
                     }
                 }

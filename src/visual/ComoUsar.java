@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -51,9 +50,7 @@ public class ComoUsar extends javax.swing.JDialog {
             this.setVisible(true);
             
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível encontrar as imagens do projeto.\n\n"
-                        + "Baixe o projeto funcional na íntegra em:\n"
-                        + "https://github.com/rodrigopontezz/RedeNeuralFiguras\n");
+            ExceptionWindow form = new ExceptionWindow(null, true, "Não foi possível encontrar as imagens do projeto.");
         }
     }
 

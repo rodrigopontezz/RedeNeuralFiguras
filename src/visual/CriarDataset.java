@@ -18,7 +18,6 @@ import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -469,7 +468,7 @@ public class CriarDataset extends javax.swing.JDialog {
             DefaultListModel model = (DefaultListModel) listFiguras.getModel();
             model.remove(selected);
         } else {
-            JOptionPane.showMessageDialog(null, "Nenhum item na lista foi selecionado!");
+            WarningWindow form = new WarningWindow(null, true, "Nenhum item na lista foi selecionado!");
         }
     }//GEN-LAST:event_btnRemoverFiguraActionPerformed
 
@@ -486,15 +485,15 @@ public class CriarDataset extends javax.swing.JDialog {
         File file = new File(".\\src\\dataset\\" + nomeArquivo.toString());
         
         if(nomeDataset.equals("")) {
-            JOptionPane.showMessageDialog(null, "Escolha um nome para o dataset!");
+            WarningWindow form = new WarningWindow(null, true, "Escolha um nome para o dataset!");
         } else if (nomeDataset.charAt(0) > 47 && nomeDataset.charAt(0) < 58) {
-            JOptionPane.showMessageDialog(null, "O nome do dataset não pode começar com números!");
+            WarningWindow form = new WarningWindow(null, true, "O nome do dataset não pode começar com números!");
         } else if (invalido) {
-            JOptionPane.showMessageDialog(null, "O nome do dataset possui um ou mais caracteres inválidos!");
+            WarningWindow form = new WarningWindow(null, true, "O nome do dataset possui um ou mais caracteres inválidos!");
         } else if (model.getSize() == 0) {
-            JOptionPane.showMessageDialog(null, "O dataset está vazio!");
+            WarningWindow form = new WarningWindow(null, true, "O dataset está vazio!");
         } else if (file.exists()) {
-            JOptionPane.showMessageDialog(null, "Já existe um dataset com este nome!");
+            WarningWindow form = new WarningWindow(null, true, "Já existe um dataset com este nome!");
         } else {
             try (PrintWriter arquivo = new PrintWriter (new BufferedWriter (new FileWriter(file)))) {
                 int tam = model.getSize(); 
@@ -507,11 +506,11 @@ public class CriarDataset extends javax.swing.JDialog {
                 }
                 
                 this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-                JOptionPane.showMessageDialog(null, "O dataset \"" + nomeArquivo.toString() + "\" foi criado com sucesso!");
+                WarningWindow form = new WarningWindow(null, true, "O dataset \"" + nomeArquivo.toString() + "\" foi criado com sucesso!");
             } catch(IOException ex) {
-                JOptionPane.showMessageDialog(null, "Não foi possível criar o dataset \"" + nomeArquivo.toString() + "\".");
+                ExceptionWindow form = new ExceptionWindow(null, true, "Erro: Não foi possível criar o dataset \"" + nomeArquivo.toString() + "\".");
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Erro inesperado.");
+                ExceptionWindow form = new ExceptionWindow(null, true, "Erro inesperado.");
             }
         }
     }//GEN-LAST:event_btnFinalizarDatasetActionPerformed
@@ -521,9 +520,9 @@ public class CriarDataset extends javax.swing.JDialog {
         String strCor = getSelectedButtonText(btnGroupCores);
         
         if (strForma == null) {
-            JOptionPane.showMessageDialog(null, "Nenhuma forma selecionada!");
+            WarningWindow form = new WarningWindow(null, true, "Nenhuma forma selecionada!");
         } else if (strCor == null) {
-            JOptionPane.showMessageDialog(null, "Nenhuma cor selecionada!");
+            WarningWindow form = new WarningWindow(null, true, "Nenhuma cor selecionada!");
         } else {
             DefaultListModel model = (DefaultListModel) listFiguras.getModel();
             model.add(model.getSize(), strForma + " " + strCor);
