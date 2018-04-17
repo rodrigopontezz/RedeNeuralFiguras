@@ -3,6 +3,6 @@ Círculo Azul
 Estrela Amarelo
 Coração Vermelho
 Trapézio Preto
-Triângulo Rosa
+Triângulo Verde
+Coração Rosa
 Círculo Vermelho
-Quadrado Verde
