@@ -1,10 +1,10 @@
-package modelo;
-
 /*	 Implementa uma matriz de estímulos e seus métodos.
  * 
- * 	 @author Rodrigo Pontes
  *	 @version 2.0
+ * 	 GitHub: https://github.com/rodrigopontezz/RedeNeuralFiguras
  */
+
+package modelo;
 
 public class Estimulo {
 	private int quantidadeEstimulos;

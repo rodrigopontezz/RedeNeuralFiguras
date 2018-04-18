@@ -1,10 +1,10 @@
-package modelo;
-
 /*	 Implementação de neurônios que treinarão a rede neural.
  * 
- * 	 @author Rodrigo Pontes
  *	 @version 2.0
+ * 	 GitHub: https://github.com/rodrigopontezz/RedeNeuralFiguras
  */
+
+package modelo;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
-package modelo;
-
 /*	 Implementação de figuras, que representam a união de uma forma e uma cor.
  * 
- * 	 @author Rodrigo Pontes
  *	 @version 2.0
+ * 	 GitHub: https://github.com/rodrigopontezz/RedeNeuralFiguras
  */
+
+package modelo;
 
 public class Figura {
 	private static int totalFiguras = 0;
@@ -40,8 +40,6 @@ public class Figura {
         public static void setTotalFiguras(int totalFiguras) {
                 Figura.totalFiguras = totalFiguras;
         }
-        
-        
 
 	public Forma getForma() {
 		return forma;

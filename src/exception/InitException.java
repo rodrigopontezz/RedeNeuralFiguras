@@ -1,10 +1,10 @@
-package exception;
-
 /*	 Exceção lançada caso não seja possível iniciar o programa.
  * 
- *       @author Rodrigo Pontes
  *	 @version 2.0
+ * 	 GitHub: https://github.com/rodrigopontezz/RedeNeuralFiguras
  */
+
+package exception;
 
 public class InitException extends Exception {
 

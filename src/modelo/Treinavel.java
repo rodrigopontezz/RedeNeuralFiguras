@@ -1,7 +1,7 @@
 /*	 Interface que identifica todos os objetos que podem ser treinados pelos neurônios.
  * 
- * 	 @author Rodrigo Pontes
- *	 @version 1.1
+ *	 @version 2.0
+ * 	 GitHub: https://github.com/rodrigopontezz/RedeNeuralFiguras
  */
 
 package modelo;

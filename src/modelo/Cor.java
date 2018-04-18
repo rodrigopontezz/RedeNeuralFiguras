@@ -1,10 +1,10 @@
-package modelo;
-
 /*	 Implementação de como a rede neural reconhece cores a partir do dataset.
  * 
- * 	 @author Rodrigo Pontes
  *	 @version 2.0
+ * 	 GitHub: https://github.com/rodrigopontezz/RedeNeuralFiguras
  */
+
+package modelo;
 
 public class Cor implements Treinavel {
 	private static int totalCores = 0;

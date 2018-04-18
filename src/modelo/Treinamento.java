@@ -1,22 +1,11 @@
-package modelo;
-
-/*   Aplicação para treinamento de Rede Neural Perceptron para identificação de
- *   formas e cores a partir de dataset textual.
+/*	 Implementação da classe que centraliza o treinamento da rede neural.
  * 
- * 	 Alunos:		Rodrigo Pontes 	(Ciências da Computação)
- * 				Luana Quelhas 	(Ciências da Computação)
- * 				Diego Assis 	(Ciências da Computação)
- * 				Hiero Bartholo	(Ciências da Computação)
- * 
- *	 Disciplina:	Inteligência Artificial I
- * 
- *	 Professor:		Márcio Piva
- * 
- *	 @version 1.1
+ *	 @version 2.0
  * 	 GitHub: https://github.com/rodrigopontezz/RedeNeuralFiguras
  */
 
-import exception.TreinamentoException;
+package modelo;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -74,109 +63,14 @@ public class Treinamento {
             JOptionPane.showMessageDialog(null, "Não foi possível ler o dataset em \"" + dataset.toString() + "\"" );
         }
     }
-
-    public void treinarRedeTotalmente() {
-        
-        this.erro = true;
-
-        /* LOOP PARA TREINAMENTO DA REDE NEURAL */
-        
-        while (this.erro) {
-            this.erro = false;
-
-            /* TREINANDO RECONHECIMENTO DE FORMAS */
-            for (int i = 0; i < Forma.getTotalFormas(); i++) {					
-                    for (int j = 0; j < this.listaNeuroniosForma.size(); j++) {			
-                            if (this.listaNeuroniosForma.get(j).aplicarEstimulos(this.estimuloFormas.getVetorEstimulo(i), i) == true || this.erro == true) {
-                                    this.erro = true;
-                            }
-                    }
-            }
-
-            /* TREINANDO RECONHECIMENTO DE CORES */
-            for (int i = 0; i < Cor.getTotalCores(); i++) {						
-                    for (int j = 0; j < this.listaNeuroniosCor.size(); j++) {			
-                            if (this.listaNeuroniosCor.get(j).aplicarEstimulos(this.estimuloCores.getVetorEstimulo(i), i) == true || this.erro == true) {
-                                    this.erro = true;
-                            }
-                    }
-            }
-
-            /* IMPRIMINDO PALPITE DOS NEUR�NIOS NO CONSOLE */				
-
-            System.out.println();
-            System.out.println("+++   ÉPOCA " + ++(this.epoca) + "   +++");
-            System.out.println();
-
-            for (Figura figura : this.listaFiguras) {
-                    StringBuffer str = new StringBuffer();
-
-                    System.out.println("_____________________");
-                    System.out.println();
-                    System.out.println("Figura " + (figura.getId()+1) + ": " + figura.getForma().getNome() + " " + figura.getCor().getNome());
-                    System.out.println();
-                    System.out.println("Os neurônios palpitam: ");
-                    System.out.println();
-                    System.out.print("FORMAS");
-                    for (int i = 0; i < this.listaNeuroniosForma.size(); i++) {
-
-
-                            System.out.print("	Neurônio " + (i+1) + ":    Eu acho que... ");
-                            char ch = this.listaNeuroniosForma.get(i).getPalpiteAt(figura.getForma().getId());
-
-                            if (ch == '1') {
-                                    System.out.println("é um(a) " + this.listaFormas.get(i).getNome() + "!");
-                            } else {
-                                    System.out.println("NÃO É um(a) " + this.listaFormas.get(i).getNome() + "!");
-                            }
-                            str.append(ch);
-                    }
-
-                    System.out.println();
-
-                    System.out.print("CORES");
-                    for (int i = 0; i < this.listaNeuroniosCor.size(); i++) {
-
-                            System.out.print("	Neurônio " + (this.listaNeuroniosForma.size()+i+1) + ":    Eu acho que... ");
-                            char ch = this.listaNeuroniosCor.get(i).getPalpiteAt(figura.getCor().getId());
-
-                            if (ch == '1') {
-                                    System.out.println("é " + this.listaCores.get(i).getNome() + "!");
-                            } else {
-                                    System.out.println("NÃO É " + this.listaCores.get(i).getNome() + "!");
-                            }
-                            str.append(ch);
-                    }
-
-                    System.out.println();
-                    System.out.println();
-
-                    if(figura.getTarget().equals(str.toString())) {
-                            System.out.println("Neurônios ACERTARAM o palpite!");
-                    } else {
-                            System.out.println("Neurônios ERRARAM o palpite!");
-                    }
-                    System.out.println();
-            }
-
-            System.out.println();
-            System.out.println("{==============================================================}");
-            System.out.println();
-
-            if (epoca > 1000) {
-                    System.out.println("Quantidade de épocas muito alta!");
-                    System.out.println("Algum neurônio está repetindo um vetor de palpites errado.");
-                    break;
-            }
-        }
-    }
+    
     
     public boolean treinar() {
         
-        /* LOOP PARA TREINAMENTO DA REDE NEURAL */
         this.erro = false;
+        this.epoca++;
 
-        /* TREINANDO RECONHECIMENTO DE FORMAS */
+        /* UMA ITERAÇÃO DE TREINO PARA RECONHECIMENTO DE FORMAS */
         for (int i = 0; i < Forma.getTotalFormas(); i++) {					
                 for (int j = 0; j < this.listaNeuroniosForma.size(); j++) {			
                         if (this.listaNeuroniosForma.get(j).aplicarEstimulos(this.estimuloFormas.getVetorEstimulo(i), i) == true || this.erro == true) {
@@ -185,7 +79,7 @@ public class Treinamento {
                 }
         }
 
-        /* TREINANDO RECONHECIMENTO DE CORES */
+        /* UMA ITERAÇÃO DE TREINO PARA RECONHECIMENTO DE CORES */
         for (int i = 0; i < Cor.getTotalCores(); i++) {						
                 for (int j = 0; j < this.listaNeuroniosCor.size(); j++) {			
                         if (this.listaNeuroniosCor.get(j).aplicarEstimulos(this.estimuloCores.getVetorEstimulo(i), i) == true || this.erro == true) {
@@ -193,62 +87,7 @@ public class Treinamento {
                         }
                 }
         }
-
-        /* IMPRIMINDO PALPITE DOS NEUR�NIOS NO CONSOLE */				
-
-        this.epoca++;
-
-        for (Figura figura : this.listaFiguras) {
-                StringBuffer str = new StringBuffer();
-
-                System.out.println("_____________________");
-                System.out.println();
-                System.out.println("Figura " + (figura.getId()+1) + ": " + figura.getForma().getNome() + " " + figura.getCor().getNome());
-                System.out.println();
-                System.out.println("Os neurônios palpitam: ");
-                System.out.println();
-                System.out.print("FORMAS");
-                for (int i = 0; i < this.listaNeuroniosForma.size(); i++) {
-
-
-                        System.out.print("	Neurônio " + (i+1) + ":    Eu acho que... ");
-                        char ch = this.listaNeuroniosForma.get(i).getPalpiteAt(figura.getForma().getId());
-
-                        if (ch == '1') {
-                                System.out.println("é um(a) " + this.listaFormas.get(i).getNome() + "!");
-                        } else {
-                                System.out.println("NÃO É um(a) " + this.listaFormas.get(i).getNome() + "!");
-                        }
-                        str.append(ch);
-                }
-
-                System.out.println();
-
-                System.out.print("CORES");
-                for (int i = 0; i < this.listaNeuroniosCor.size(); i++) {
-
-                        System.out.print("	Neurônio " + (this.listaNeuroniosForma.size()+i+1) + ":    Eu acho que... ");
-                        char ch = this.listaNeuroniosCor.get(i).getPalpiteAt(figura.getCor().getId());
-
-                        if (ch == '1') {
-                                System.out.println("é " + this.listaCores.get(i).getNome() + "!");
-                        } else {
-                                System.out.println("NÃO É " + this.listaCores.get(i).getNome() + "!");
-                        }
-                        str.append(ch);
-                }
-
-                System.out.println();
-                System.out.println();
-
-                if(figura.getTarget().equals(str.toString())) {
-                        System.out.println("Neurônios ACERTARAM o palpite!");
-                } else {
-                        System.out.println("Neurônios ERRARAM o palpite!");
-                }
-                System.out.println();
-        }
-
+        
         return this.erro;
         
     }
@@ -383,19 +222,7 @@ public class Treinamento {
         return this.listaNeuroniosCor;
     }
 
-    public Estimulo getEstimuloFormas() {
-        return this.estimuloFormas;
-    }
-
-    public Estimulo getEstimuloCores() {
-        return this.estimuloCores;
-    }
-
     public int getEpoca() {
         return this.epoca;
-    }
-
-    public boolean isErro() {
-        return this.erro;
     }
 }
